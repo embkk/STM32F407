@@ -19,12 +19,12 @@
   <MemoryWindow addressSpace="" dataSize="1" autoEvaluate="0" viewMode="0" viewType="4" addressOrder="0" columnsText="" refreshPeriod="0" name="korneev_4_Debug" sizeText="" addressText=""/>
  </Memory4>
  <Project>
-  <ProjectSessionItem path="korneev_4"/>
-  <ProjectSessionItem path="korneev_4;korneev_4"/>
-  <ProjectSessionItem path="korneev_4;korneev_4;CMSIS Files"/>
-  <ProjectSessionItem path="korneev_4;korneev_4;Script Files"/>
-  <ProjectSessionItem path="korneev_4;korneev_4;Source Files"/>
-  <ProjectSessionItem path="korneev_4;korneev_4;System Files"/>
+  <ProjectSessionItem path="PCB Teach Sandbox"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;inc"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;src"/>
  </Project>
  <Register1>
   <RegisterWindow invisibleNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="korneev_4_Debug" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -57,9 +57,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="38" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="47" y="20" useTextEdit="1" path="RCC_Init.c" left="0" top="20" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="40" y="240" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="240" codecName="Default"/>
  </Files>
- <EMStudioWindow activeProject="korneev_4" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
+ <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
