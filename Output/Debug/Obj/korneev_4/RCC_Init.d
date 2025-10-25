@@ -1,6 +1,6 @@
-Output/Debug/Obj/korneev_4/main.o: \
-  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/main.c \
-  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/main.h \
+Output/Debug/Obj/korneev_4/RCC_Init.o: \
+  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/RCC_Init.c \
+  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/STM32F4xx/Device/Include/stm32f4xx.h \
   /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/STM32F4xx/Device/Include/stm32f407xx.h \
   /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/CMSIS_5/CMSIS/Core/Include/core_cm4.h \
   /opt/SEGGER/segger_embedded_studio_8.24/include/stdint.h \
@@ -12,7 +12,4 @@ Output/Debug/Obj/korneev_4/main.o: \
   /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/CMSIS_5/CMSIS/Core/Include/cmsis_compiler.h \
   /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/CMSIS_5/CMSIS/Core/Include/cmsis_gcc.h \
   /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/CMSIS_5/CMSIS/Core/Include/mpu_armv7.h \
-  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/STM32F4xx/Device/Include/system_stm32f4xx.h \
-  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/gpio.h \
-  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/validation.h \
-  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/exti.h
+  /home/unmanned-john-doe/git/embedded/pcbteach_sandbox/STM32F4xx/Device/Include/system_stm32f4xx.h

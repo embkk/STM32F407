@@ -1,8 +1,9 @@
 <!DOCTYPE CrossStudio_Project_File>
-<solution Name="korneev_4" target="8" version="2">
+<solution Name="PCB Teach Sandbox" target="8" version="2">
   <configuration
     Name="Debug"
     c_preprocessor_definitions="DEBUG"
+    c_user_include_directories=".$(SolutionDir)/lib/inc;.$(SolutionDir)/lib/src"
     gcc_debugging_level="Level 3"
     gcc_omit_frame_pointer="Yes"
     gcc_optimization_level="None" />
@@ -12,7 +13,7 @@
     gcc_debugging_level="Level 2"
     gcc_omit_frame_pointer="Yes"
     gcc_optimization_level="Level 2 balanced" />
-  <project Name="korneev_4">
+  <project Name="PCB Teach Sandbox">
     <configuration
       LIBRARY_IO_TYPE="RTT"
       Name="Common"
@@ -45,6 +46,9 @@
       target_reset_script="Reset();" />
     <configuration
       Name="Debug"
+      arm_target_trace_clock_speed="84000000"
+      arm_target_trace_interface_type="SWO"
+      c_user_include_directories=".;$(ProjectDir)/lib/src;$(ProjectDir)/lib/inc"
       debug_initial_breakpoint_set_option="Never"
       debug_target_connection="GDB Server"
       gdb_server_allow_memory_access_during_execution="Yes"
@@ -71,8 +75,33 @@
     </folder>
     <folder Name="Source Files">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+      <folder Name="lib">
+        <folder Name="inc">
+          <file file_name="buttons.h" />
+          <file file_name="event.h" />
+          <file file_name="exti.h" />
+          <file file_name="fsm.h" />
+          <file file_name="gpio.h" />
+          <file file_name="i2c.h" />
+          <file file_name="log.h" />
+          <file file_name="spi.h" />
+          <file file_name="tools.h" />
+          <file file_name="usart.h" />
+          <file file_name="validation.h" />
+        </folder>
+        <folder Name="src">
+          <file file_name="buttons.c" />
+          <file file_name="event.c" />
+          <file file_name="fsm.c" />
+          <file file_name="i2c.c" />
+          <file file_name="log.c" />
+          <file file_name="RCC_Init.c" />
+          <file file_name="spi.c" />
+          <file file_name="test.c" />
+          <file file_name="usart.c" />
+        </folder>
+      </folder>
       <file file_name="main.c" />
-      <file file_name="RCC_Init.c" />
     </folder>
     <folder Name="System Files">
       <file file_name="SEGGER_THUMB_Startup.s" />

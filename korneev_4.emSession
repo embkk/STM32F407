@@ -57,9 +57,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="25" y="24" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="47" y="20" useTextEdit="1" path="RCC_Init.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="240" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="223" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="38" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="47" y="20" useTextEdit="1" path="RCC_Init.c" left="0" top="20" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="240" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="240" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="korneev_4" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
