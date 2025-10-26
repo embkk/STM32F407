@@ -13,17 +13,11 @@ uint32_t time_ms;
 uint32_t sec_delay;
 
 uint32_t capture_ms;
-uint32_t capture_test_ms;
-uint8_t capture_mode;
-
-
-//uint32_t delay_500ms;
-//uint32_t delay_10ms;
 
 int main(void) {
   SystemInit();
   RCC_Init();
-  SysTick_Config(168000);
+  SysTick_Config(84000);
 
   Buttons_init();
   EXTI_init_lines(10,11);
@@ -41,42 +35,8 @@ int main(void) {
   }
 }
 
-void OnButtonPressed(uint8_t btn1) {
-  if(btn1) {
-    //capture_mode = 0;
-    LOG_MESSAGE("Capture result: %lu checktest %lu", capture_ms, capture_test_ms);
-  } else {
-    capture_mode = 1;
-    capture_test_ms = 0;
-    capture_ms = 0;
-    TIM1->CR1 |= TIM_CR1_CEN;
-    TIM2->CR1 |= TIM_CR1_CEN;
-  }
-}
-
-void EXTI15_10_IRQHandler(void) {
-  
-  EXTI_handle(10, OnButtonPressed(0));
-  EXTI_handle(11, OnButtonPressed(1));
-
-}
-
-
-void SysTick_Handler(void) {
-  time_ms++;
-  sec_delay++;
-  if(capture_mode) {
-    capture_test_ms++;
-  }
-}
-
 void TIM1_Init(void) {
   RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
-
-  // PA8 alt function 1
-  //RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN; 
-  //GPIOA->MODER |= GPIO_MODER_MODER8_1;
-  //GPIOA->AFR[1] |= (1 << GPIO_AFRH_AFSEL8_Pos);
 
   TIM1->SMCR |= 0b001 << TIM_SMCR_TS_Pos; // internal trigger 1
   TIM1->SMCR |= 0b111 << TIM_SMCR_SMS_Pos; // SMS = 111 (ECLK Mode 2)
@@ -111,14 +71,8 @@ void TIM2_Init(void) {
 }
 
 void TIM1_CC_IRQHandler(void) {
-    static uint32_t tim1_count = 0;
     if (TIM1->SR & TIM_SR_CC1IF) {
         capture_ms++;
-        tim1_count++;
-        if (tim1_count >= 500) {
-          GPIO_LED_toggle(LED01);
-          tim1_count = 0;
-        }
         TIM1->SR &= ~TIM_SR_CC1IF;
     }
 }
@@ -126,7 +80,6 @@ void TIM1_CC_IRQHandler(void) {
 void TIM2_IRQHandler(void) {
     static uint32_t tim2_count = 0;
     if (TIM2->SR & TIM_SR_UIF) {
-        
         tim2_count++;
         if (tim2_count >= 500) {
             GPIO_LED_toggle(LED02);
@@ -134,4 +87,26 @@ void TIM2_IRQHandler(void) {
         }
         TIM2->SR &= ~TIM_SR_UIF; // Сброс флага
     }
+}
+
+void SysTick_Handler(void) {
+  time_ms++;
+  sec_delay++;
+}
+
+void OnButtonPressed(uint8_t btn1) {
+  if(btn1) {
+    LOG_MESSAGE("Capture result: %lu", capture_ms);
+  } else {
+    capture_ms = 0;
+    TIM1->CR1 |= TIM_CR1_CEN;
+    TIM2->CR1 |= TIM_CR1_CEN;
+  }
+}
+
+void EXTI15_10_IRQHandler(void) {
+  
+  EXTI_handle(10, OnButtonPressed(0));
+  EXTI_handle(11, OnButtonPressed(1));
+
 }
