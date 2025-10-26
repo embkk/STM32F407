@@ -123,7 +123,7 @@ void TIM1_CC_IRQHandler(void) {
     }
 }
 
-/*void TIM2_IRQHandler(void) {
+void TIM2_IRQHandler(void) {
     static uint32_t tim2_count = 0;
     if (TIM2->SR & TIM_SR_UIF) {
         
@@ -134,4 +134,4 @@ void TIM1_CC_IRQHandler(void) {
         }
         TIM2->SR &= ~TIM_SR_UIF; // Сброс флага
     }
-}*/
+}
