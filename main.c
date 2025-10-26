@@ -2,14 +2,21 @@
 #include "buttons.h"
 #include "gpio.h"
 #include "log.h"
+#include "exti.h"
 
 void RCC_Init(void);
 void TIM1_Init(void);
 void TIM2_Init(void);
+void OnButtonPressed(uint8_t);
 
 uint32_t time_ms;
 uint32_t sec_delay;
-uint32_t capture;
+
+uint32_t capture_ms;
+uint32_t capture_test_ms;
+uint8_t capture_mode;
+
+
 //uint32_t delay_500ms;
 //uint32_t delay_10ms;
 
@@ -17,7 +24,9 @@ int main(void) {
   SystemInit();
   RCC_Init();
   SysTick_Config(168000);
-  
+
+  Buttons_init();
+  EXTI_init_lines(10,11);
   LED_init();
   TIM1_Init();
   TIM2_Init();
@@ -27,14 +36,38 @@ int main(void) {
   while(1) {
     if(sec_delay>=1000) {
       sec_delay = 0;
-      GPIO_LED_toggle(LED01);
+      GPIO_LED_toggle(LED03);
     }
   }
 }
 
+void OnButtonPressed(uint8_t btn1) {
+  if(btn1) {
+    //capture_mode = 0;
+    LOG_MESSAGE("Capture result: %lu checktest %lu", capture_ms, capture_test_ms);
+  } else {
+    capture_mode = 1;
+    capture_test_ms = 0;
+    capture_ms = 0;
+    TIM1->CR1 |= TIM_CR1_CEN;
+    TIM2->CR1 |= TIM_CR1_CEN;
+  }
+}
+
+void EXTI15_10_IRQHandler(void) {
+  
+  EXTI_handle(10, OnButtonPressed(0));
+  EXTI_handle(11, OnButtonPressed(1));
+
+}
+
+
 void SysTick_Handler(void) {
   time_ms++;
   sec_delay++;
+  if(capture_mode) {
+    capture_test_ms++;
+  }
 }
 
 void TIM1_Init(void) {
@@ -45,10 +78,10 @@ void TIM1_Init(void) {
   //GPIOA->MODER |= GPIO_MODER_MODER8_1;
   //GPIOA->AFR[1] |= (1 << GPIO_AFRH_AFSEL8_Pos);
 
-  TIM1->SMCR |= 0b001; // internal trigger 1
-  TIM1->SMCR |= 0b111; // SMS = 111 (ECLK Mode 2)
+  TIM1->SMCR |= 0b001 << TIM_SMCR_TS_Pos; // internal trigger 1
+  TIM1->SMCR |= 0b111 << TIM_SMCR_SMS_Pos; // SMS = 111 (ECLK Mode 2)
   //TIM1->PSC = 83;
-  //TIM1->ARR = 999;
+  TIM1->ARR = 0xFFFF; //max limit
 
   // Захват входа
   TIM1->CCMR1 |= TIM_CCMR1_CC1S; // захват входа
@@ -59,7 +92,7 @@ void TIM1_Init(void) {
   TIM1->DIER |= TIM_DIER_CC1IE; // Прерывание по захвату
   NVIC_EnableIRQ(TIM1_CC_IRQn); // Включение в NVIC
 
-  TIM1->CR1 |= TIM_CR1_CEN; // Включение TIM1
+  //TIM1->CR1 |= TIM_CR1_CEN; // Включение TIM1
 }
 
 void TIM2_Init(void) {
@@ -74,49 +107,31 @@ void TIM2_Init(void) {
     TIM2->DIER |= TIM_DIER_UIE;
     NVIC_EnableIRQ(TIM2_IRQn);
 
-    TIM2->CR1 |= TIM_CR1_CEN; // Включение TIM2
+    //TIM2->CR1 |= TIM_CR1_CEN; // Включение TIM2
 }
 
-/*void X(void) {
-RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
-  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN; 
-
-  GPIOE->MODER &= (~GPIO_MODER_MODE14_Msk);
-  GPIOE->MODER |= (0b10 << GPIO_MODER_MODE14_Pos);
-
-  GPIOE->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR14_1;
-  GPIOE->AFR[1] |= GPIO_AFRH_AFRH6_0;
-
-  TIM1->PSC = 83;
-  TIM1->CR1 |= TIM_CR1_CMS;
-  TIM1->ARR = 999;
-  TIM1->CCR4 = 1;
-  TIM1->CCMR2 |= TIM_CCMR2_OC4M;
-  TIM1->CCMR2 &= ~(TIM_CCMR2_CC4S);
-  TIM1->CCER |= TIM_CCER_CC4E;
-  TIM1->BDTR |= TIM_BDTR_MOE;
-
-  TIM1->CR1 |= TIM_CR1_CEN;
-  TIM1->EGR |= TIM_EGR_UG;
-}*/
-
 void TIM1_CC_IRQHandler(void) {
+    static uint32_t tim1_count = 0;
     if (TIM1->SR & TIM_SR_CC1IF) {
-        capture = TIM1->CCR1; // Сохраняем значение захвата
-        GPIO_LED_toggle(LED01); // Мигаем LED01 при каждом захвате
-        TIM1->SR &= ~TIM_SR_CC1IF; // Сброс флага
-        LOG_MESSAGE("TIM1 Capture: %lu\n", capture); // Логируем для отладки
+        capture_ms++;
+        tim1_count++;
+        if (tim1_count >= 500) {
+          GPIO_LED_toggle(LED01);
+          tim1_count = 0;
+        }
+        TIM1->SR &= ~TIM_SR_CC1IF;
     }
 }
 
-void TIM2_IRQHandler(void) {
+/*void TIM2_IRQHandler(void) {
     static uint32_t tim2_count = 0;
     if (TIM2->SR & TIM_SR_UIF) {
+        
         tim2_count++;
-        if (tim2_count >= 500) { // 500 мс (500 событий по 1 мс)
-            GPIO_LED_toggle(LED02); // Мигаем LED02
+        if (tim2_count >= 500) {
+            GPIO_LED_toggle(LED02);
             tim2_count = 0;
         }
         TIM2->SR &= ~TIM_SR_UIF; // Сброс флага
     }
-}
+}*/
