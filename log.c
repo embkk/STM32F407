@@ -1,6 +1,5 @@
 #include "log.h"
 
-
 // 1. SRAM
 #if LOG_ENABLE && (LOG_METHOD == LOG_SRAM)
   log_t Log;
