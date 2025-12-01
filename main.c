@@ -1,112 +1,71 @@
 #include <stm32f407xx.h>
 #include "buttons.h"
-#include "gpio.h"
 #include "log.h"
-#include "exti.h"
 
 void RCC_Init(void);
 void TIM1_Init(void);
-void TIM2_Init(void);
-void OnButtonPressed(uint8_t);
-
-uint32_t time_ms;
-uint32_t sec_delay;
-
-uint32_t capture_ms;
+void ADC1_Init(void);
+void ADC_IRQHandler(void);
 
 int main(void) {
+  LOG_INIT();
+
   SystemInit();
   RCC_Init();
   SysTick_Config(84000);
 
-  Buttons_init();
-  EXTI_init_lines(10,11);
-  LED_init();
+  //Buttons_init();
+  //EXTI_init_lines(10,11);
+  //LED_init();
   TIM1_Init();
-  TIM2_Init();
-
-  LOG_INIT();
+  ADC1_Init();
 
   while(1) {
-    if(sec_delay>=1000) {
-      sec_delay = 0;
-      GPIO_LED_toggle(LED03);
-    }
+    
   }
+}
+
+void ADC_IRQHandler(void) {
+  TIM1->CCR4 = ( ADC1->DR * 1000 ) / 4096;
+  NVIC_ClearPendingIRQ(ADC_IRQn);
+}
+
+void ADC1_Init(void) {
+  RCC->APB2ENR |= RCC_APB2ENR_ADC1EN;   
+  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+
+  GPIOA->MODER |= GPIO_MODER_MODE5;
+  
+  ADC1->SMPR2  |= ADC_SMPR2_SMP5_0;       // 15+12 циклов
+  ADC1->SQR1   |= ~(ADC_SQR1_L);          // Длина последовательности 1
+  ADC1->SQR3   |= 5 << ADC_SQR3_SQ1_Pos;  // Первая конвертация 5 канал
+  ADC1->CR1    |= ADC_CR1_EOCIE;          // прерывание по завершению преобразования
+  
+  NVIC_EnableIRQ(ADC_IRQn);
+
+  ADC1->CR2    |= ADC_CR2_CONT | ADC_CR2_ADON;   //непрерывный режим | включаем модуль ацп
+  ADC1->CR2    |= ADC_CR2_SWSTART;//запуск измерения
 }
 
 void TIM1_Init(void) {
   RCC->APB2ENR |= RCC_APB2ENR_TIM1EN;
+  RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
 
-  TIM1->SMCR |= 0b001 << TIM_SMCR_TS_Pos; // internal trigger 1
-  TIM1->SMCR |= 0b111 << TIM_SMCR_SMS_Pos; // SMS = 111 (ECLK Mode 2)
-  //TIM1->PSC = 83;
-  TIM1->ARR = 0xFFFF; //max limit
-
+  GPIOE->MODER   |= GPIO_MODER_MODE14_1;
+  GPIOE->OSPEEDR |= GPIO_OSPEEDER_OSPEEDR14_1;
+  GPIOE->AFR[1]  |= GPIO_AFRH_AFRH6_0;
+  
   // Захват входа
-  TIM1->CCMR1 |= TIM_CCMR1_CC1S; // захват входа
-  TIM1->CCER &= ~TIM_CCER_CC1P; // Capture/Compare 1 output polarity active low
-  TIM1->CCER |= TIM_CCER_CC1E; // capture/compare enable
-  
-  // прерывание по захвату
-  TIM1->DIER |= TIM_DIER_CC1IE; // Прерывание по захвату
-  NVIC_EnableIRQ(TIM1_CC_IRQn); // Включение в NVIC
+  TIM1->PSC    = 83;
+  TIM1->CR1   |= TIM_CR1_CMS;
+  TIM1->ARR    = 999;
+  TIM1->CCR4   = 1;
+  TIM1->CCMR2 |= TIM_CCMR2_OC4M;
+  TIM1->CCMR2 &= ~(TIM_CCMR2_CC4S);
+  TIM1->CCER  |= TIM_CCER_CC4E;
+  TIM1->BDTR  |= TIM_BDTR_MOE;
 
-  //TIM1->CR1 |= TIM_CR1_CEN; // Включение TIM1
-}
+  TIM1->CR1 |= TIM_CR1_CEN;
 
-void TIM2_Init(void) {
-    RCC->APB1ENR |= RCC_APB1ENR_TIM2EN; // Включение TIM2
-
-    TIM2->PSC = 83; // Предделитель (1 МГц при 84 МГц на APB1)
-    TIM2->ARR = 999; // Период 1 мс (1 кГц)
-
-    // Настройка TIM2 как мастер: вывод Update Event на TRGO
-    TIM2->CR2 |= TIM_CR2_MMS_1; // MMS = 010 (Update Event на TRGO)
-
-    TIM2->DIER |= TIM_DIER_UIE;
-    NVIC_EnableIRQ(TIM2_IRQn);
-
-    //TIM2->CR1 |= TIM_CR1_CEN; // Включение TIM2
-}
-
-void TIM1_CC_IRQHandler(void) {
-    if (TIM1->SR & TIM_SR_CC1IF) {
-        capture_ms++;
-        TIM1->SR &= ~TIM_SR_CC1IF;
-    }
-}
-
-void TIM2_IRQHandler(void) {
-    static uint32_t tim2_count = 0;
-    if (TIM2->SR & TIM_SR_UIF) {
-        tim2_count++;
-        if (tim2_count >= 500) {
-            GPIO_LED_toggle(LED02);
-            tim2_count = 0;
-        }
-        TIM2->SR &= ~TIM_SR_UIF; // Сброс флага
-    }
-}
-
-void SysTick_Handler(void) {
-  time_ms++;
-  sec_delay++;
-}
-
-void OnButtonPressed(uint8_t btn1) {
-  if(btn1) {
-    LOG_MESSAGE("Capture result: %lu", capture_ms);
-  } else {
-    capture_ms = 0;
-    TIM1->CR1 |= TIM_CR1_CEN;
-    TIM2->CR1 |= TIM_CR1_CEN;
-  }
-}
-
-void EXTI15_10_IRQHandler(void) {
-  
-  EXTI_handle(10, OnButtonPressed(0));
-  EXTI_handle(11, OnButtonPressed(1));
-
+  TIM1->EGR |= TIM_EGR_UG;
 }
