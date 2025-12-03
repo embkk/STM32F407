@@ -12,18 +12,35 @@ int main(void) {
 
   SystemInit();
   RCC_Init();
-  SysTick_Config(84000);
+
+  LED_init();
+  GPIO_LED_all_off();
 
   TIM2_Init();
   ADC1_Init();
-
+  LOG_MESSAGE("ADC INIT SUCCESS");
+  
+  
   while(1) {
     
   }
 }
 
 void ADC_IRQHandler(void) {
-  LOG_MESSAGE("IRQ ");
+    /* Bit 0 AWD: Analog watchdog flag
+    This bit is set by hardware when the converted voltage crosses the values programmed in
+    the ADC_LTR and ADC_HTR registers. It is cleared by software.
+    0: No analog watchdog event occurred
+    1: Analog watchdog event occurred*/
+
+    if (ADC1->SR & ADC_SR_AWD) {
+        GPIO_LED_off(LED02);
+    } else {
+        GPIO_LED_on(LED02);
+    }
+
+    ADC1->SR &= ~ADC_SR_AWD; // сброс флага AWD
+    NVIC_ClearPendingIRQ(ADC_IRQn);
 }
 
 void ADC1_Init(void) {
@@ -34,7 +51,7 @@ void ADC1_Init(void) {
 
   ADC1->SMPR2 |= ADC_SMPR2_SMP5_0; // выбираем канал конвертирования ADC1 Channel 5 и время конвертирования 15 тактов
   ADC1->JSQR &= ~(ADC_JSQR_JL); // Длина последовательности инжектированных каналов равна 1
-  ADC1->JSQR |= (5 << ADC_JSQR_JSQ4_Pos); // выбрать АЦП канал 5 для конвертирования в последовательности
+  ADC1->JSQR |= (5 << ADC_JSQR_JSQ4_Pos); // When JL=0 (1 injected conversion in the sequencer), the ADC converts only JSQ4[4:0] channel.
 
   
   ADC1->CR1 |= ADC_CR1_JAWDEN; // Analog Watchdog для инжектированных каналов
@@ -46,9 +63,11 @@ void ADC1_Init(void) {
   ADC1->HTR = 819; // 80% от 1024
   ADC1->LTR = 102; // 10% от 1024
   
-  ADC1->CR2 |= ADC_CR2_JEXTEN_1; // falling edge
-  ADC1->CR2 |= 0b0110 << ADC_CR2_JEXTSEL_Pos; // TIM2_TRGO
+  ADC1->CR2 |= ADC_CR2_JEXTEN_0; // rising edge 
+  //ADC1->CR2 |= ADC_CR2_JEXTSEL_1; //TIM2_CH1
+  ADC1->CR2 |= 3 << ADC_CR2_JEXTSEL_Pos; // TIM2_TRGO
   ADC1->CR2 |= ADC_CR2_ADON; // АЦП вкл
+  ADC1->CR2 |= ADC_CR2_JSWSTART; 
 
   NVIC_EnableIRQ(ADC_IRQn);
 }
@@ -68,21 +87,12 @@ void TIM2_Init(void)
     TIM2->CR2 &= ~TIM_CR2_MMS;    
     TIM2->CR2 |= 0b010 << TIM_CR2_MMS_Pos;
 
-    TIM2->DIER |= TIM_DIER_UIE; // Bit 0 UIE: Update interrupt enable
+    //TIM2->DIER |= TIM_DIER_UIE; // Bit 0 UIE: Update interrupt enable
 
     /* Bit 0 UG: Update generation 1: Re-initialize the counter and generates an update of the registers. */
-    TIM2->EGR |= TIM_EGR_UG;
+    //TIM2->EGR |= TIM_EGR_UG;
     
     TIM2->CR1 |= TIM_CR1_CEN;
 
-    NVIC_EnableIRQ(TIM2_IRQn);
+    //NVIC_EnableIRQ(TIM2_IRQn);
 }
-/*void TIM2_IRQHandler(void)
-{
-    if (TIM2->SR & TIM_SR_UIF)
-    {
-        TIM2->SR &= ~TIM_SR_UIF;
-        LOG_MESSAGE("TIM2\n");
-    }
-}
-*/
