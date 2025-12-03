@@ -23,7 +23,7 @@
       va_end(args);
 
       // Автоинкремент индекса
-      log_current_index = (log_current_index + 1) % LOG_MESSAGE_TEXT_LENGTH;
+      log_current_index = (log_current_index + 1);
   }
 #endif
 

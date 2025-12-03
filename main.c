@@ -7,37 +7,34 @@ void TIM2_Init(void);
 void ADC1_Init(void);
 void ADC_IRQHandler(void);
 
-uint32_t time_ms;
+#define BOTTOM_LEVEL 102
+#define TOP_LEVEL 819
+#define WATCHDOG_TIMEOUT 1000
+
+uint8_t watchdog_state;
+uint32_t watchdog_time_ms;
+uint16_t pa5_level;
+uint16_t led_state;
 
 int main(void) {
   LOG_INIT();
 
   SystemInit();
-  SysTick_Config(84000);
-
   RCC_Init();
-
   LED_init();
   GPIO_LED_all_off();
 
   TIM2_Init();
   ADC1_Init();
-  LOG_MESSAGE("ADC INIT SUCCESS");
-  
-  
+  SysTick_Config(SystemCoreClock / 1000); // 1 мс
+
   while(1) {
-    
-  }
-}
-
-uint32_t irq_count;
-uint32_t irq_awd_count;
-
-void SysTick_Handler(void) {
-  time_ms++;
-  if(time_ms>=1000) {
-    LOG_MESSAGE("IRQ %d AWD %d", irq_count, irq_awd_count);
-    time_ms = 0;
+    if(watchdog_state && watchdog_time_ms>WATCHDOG_TIMEOUT) {
+      // watchdog was a 1000ms ago
+      // back to normal work
+      watchdog_state = 0;
+      GPIO_LED_off(LED01);
+    }
   }
 }
 
@@ -47,16 +44,21 @@ void ADC_IRQHandler(void) {
     the ADC_LTR and ADC_HTR registers. It is cleared by software.
     0: No analog watchdog event occurred
     1: Analog watchdog event occurred*/
-    irq_count++;
     if (ADC1->SR & ADC_SR_AWD) {
-      irq_awd_count++;
-      GPIO_LED_off(LED02);
-    } else {
-      GPIO_LED_on(LED02);
+      watchdog_time_ms = 0;
+      watchdog_state = 1;
+      ADC1->SR &= ~ADC_SR_AWD; // сброс флага AWD
+      GPIO_LED_on(LED01);
     }
 
-    ADC1->SR &= ~ADC_SR_AWD; // сброс флага AWD
+    pa5_level = ADC1->JDR1;
+    led_state = ADC1->JDR1 > BOTTOM_LEVEL && ADC1->JDR1 < TOP_LEVEL;
+
     NVIC_ClearPendingIRQ(ADC_IRQn);
+}
+
+void SysTick_Handler(void) {
+  watchdog_time_ms++;
 }
 
 void ADC1_Init(void) {
@@ -73,17 +75,17 @@ void ADC1_Init(void) {
   ADC1->CR1 |= ADC_CR1_JAWDEN; // Analog Watchdog для инжектированных каналов
   ADC1->CR1 |= (5 << ADC_CR1_AWDCH_Pos); // канал 5 Analog Watchdog
   ADC1->CR1 |= ADC_CR1_AWDIE; // разрешение прерывания по analog watchdog
-  ADC1->CR1 |= ADC_CR1_JEOCIE; // разрешение прерывания при injected end of conversion
+  //ADC1->CR1 |= ADC_CR1_JEOCIE; // разрешение прерывания при injected end of conversion
   
   ADC1->CR1 |= ADC_CR1_RES_0; // 10 бит 1024
-  ADC1->HTR = 819; // 80% от 1024
-  ADC1->LTR = 102; // 10% от 1024
+  ADC1->HTR = TOP_LEVEL; // 80% от 1024
+  ADC1->LTR = BOTTOM_LEVEL; // 10% от 1024
   
   ADC1->CR2 |= ADC_CR2_JEXTEN_0; // rising edge 
   //ADC1->CR2 |= ADC_CR2_JEXTSEL_1; //TIM2_CH1
   ADC1->CR2 |= 3 << ADC_CR2_JEXTSEL_Pos; // TIM2_TRGO
   ADC1->CR2 |= ADC_CR2_ADON; // АЦП вкл
-  ADC1->CR2 |= ADC_CR2_JSWSTART; 
+  //ADC1->CR2 |= ADC_CR2_JSWSTART; 
 
   NVIC_EnableIRQ(ADC_IRQn);
 }
