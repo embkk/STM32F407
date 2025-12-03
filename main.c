@@ -7,10 +7,14 @@ void TIM2_Init(void);
 void ADC1_Init(void);
 void ADC_IRQHandler(void);
 
+uint32_t time_ms;
+
 int main(void) {
   LOG_INIT();
 
   SystemInit();
+  SysTick_Config(84000);
+
   RCC_Init();
 
   LED_init();
@@ -26,17 +30,29 @@ int main(void) {
   }
 }
 
+uint32_t irq_count;
+uint32_t irq_awd_count;
+
+void SysTick_Handler(void) {
+  time_ms++;
+  if(time_ms>=1000) {
+    LOG_MESSAGE("IRQ %d AWD %d", irq_count, irq_awd_count);
+    time_ms = 0;
+  }
+}
+
 void ADC_IRQHandler(void) {
     /* Bit 0 AWD: Analog watchdog flag
     This bit is set by hardware when the converted voltage crosses the values programmed in
     the ADC_LTR and ADC_HTR registers. It is cleared by software.
     0: No analog watchdog event occurred
     1: Analog watchdog event occurred*/
-
+    irq_count++;
     if (ADC1->SR & ADC_SR_AWD) {
-        GPIO_LED_off(LED02);
+      irq_awd_count++;
+      GPIO_LED_off(LED02);
     } else {
-        GPIO_LED_on(LED02);
+      GPIO_LED_on(LED02);
     }
 
     ADC1->SR &= ~ADC_SR_AWD; // сброс флага AWD
