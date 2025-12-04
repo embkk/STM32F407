@@ -8,9 +8,10 @@ void ADC1_Init(void);
 void DMA2_Stream0_Init(void);
 void DMA2_Stream0_IRQHandler(void);
 
-uint16_t buffer[8] __attribute__((section(".fast")));
-
+uint16_t buffer_in[8] __attribute__((section(".fast")));
+uint16_t buffer_out[8] __attribute__((section(".fast")));
 int main(void) {
+  
   LOG_INIT();
 
   SystemInit();
