@@ -63,10 +63,10 @@
  </Watch1>
  <Watch2>
   <Watches active="1" update="Never">
-   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="42" filename="main.c"/>
-   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="40" filename="main.c"/>
-   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="63" filename="main.c"/>
-   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="62" filename="main.c"/>
+   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="168" filename="main.c"/>
+   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="166" filename="main.c"/>
+   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="189" filename="main.c"/>
+   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="188" filename="main.c"/>
   </Watches>
  </Watch2>
  <Watch3>
@@ -76,14 +76,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="20" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="43" y="212" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="185" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="1614" useTextEdit="1" path="STM32F4xx/Device/Include/stm32f407xx.h" left="0" top="1590" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="gpio.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="11" y="10" useTextEdit="1" path="buttons.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="21" y="25" useTextEdit="1" path="buttons.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="24" y="21" useTextEdit="1" path="log.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="23" useTextEdit="1" path="log.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="15" y="21" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
