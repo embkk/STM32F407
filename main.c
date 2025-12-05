@@ -17,11 +17,10 @@ char buffer_in[BUFFER_LEN] __attribute__((section(".fast")));
 uint32_t last_send_ms;
 
 int main(void) {
-  int i = 0;
   LOG_INIT();
 
   SystemInit();
-  SysTick_Config(SystemCoreClock);
+  SysTick_Config(SystemCoreClock / 1000); // 1 мс
   RCC_Init();
 
   USART_init();
@@ -35,9 +34,6 @@ int main(void) {
   DMA2_Stream7_Init();
 
   while(1) {
-    /* здесь ничего не нужно
-    i++;
-    buffer_src[0] = i;*/
   }
 }
 

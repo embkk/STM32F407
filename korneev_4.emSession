@@ -28,6 +28,7 @@
  <Project>
   <ProjectSessionItem path="PCB Teach Sandbox"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;CMSIS Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;inc"/>
@@ -63,8 +64,8 @@
  </Watch1>
  <Watch2>
   <Watches active="1" update="Never">
-   <Watchpoint expression="buffer_in" name="buffer_in" radix="-1" linenumber="13" filename="main.c"/>
-   <Watchpoint expression="buffer_src" name="buffer_src" radix="-1" linenumber="12" filename="main.c"/>
+   <Watchpoint expression="buffer_in" name="buffer_in" radix="-1" linenumber="154" filename="main.c"/>
+   <Watchpoint expression="buffer_src" name="buffer_src" radix="-1" linenumber="153" filename="main.c"/>
   </Watches>
  </Watch2>
  <Watch3>
@@ -74,9 +75,10 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="104" useTextEdit="1" path="main.c" left="0" selected="1" top="78" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="49" y="7" useTextEdit="1" path="usart.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="3" y="77" useTextEdit="1" path="usart.c" left="0" top="39" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="17" useTextEdit="1" path="main.c" left="0" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="11" y="8" useTextEdit="1" path="usart.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="79" useTextEdit="1" path="usart.c" left="0" top="35" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="43" y="270" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="237" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
