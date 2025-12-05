@@ -86,7 +86,6 @@
           <file file_name="log.h" />
           <file file_name="spi.h" />
           <file file_name="tools.h" />
-          <file file_name="usart.c" />
           <file file_name="usart.h" />
           <file file_name="validation.h" />
         </folder>
@@ -99,6 +98,7 @@
           <file file_name="RCC_Init.c" />
           <file file_name="spi.c" />
           <file file_name="test.c" />
+          <file file_name="usart.c" />
         </folder>
       </folder>
       <file file_name="main.c" />

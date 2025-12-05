@@ -7,6 +7,5 @@ extern unsigned char USART_Initialized;
 
 void USART_send_string(USART_TypeDef*, const char*);
 void USART_init(void);
-void USART1_IRQHandler(void);
 
 #endif

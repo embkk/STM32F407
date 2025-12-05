@@ -43,9 +43,9 @@ void USART_init(void) {
   USART_Initialized = 1;
 }
 
-void USART1_IRQHandler(void) {
+/*void USART1_IRQHandler(void) {
   
-  /*if((USART1->SR & USART_SR_RXNE) != 0) {
+  if((USART1->SR & USART_SR_RXNE) != 0) {
     uint16_t RXc = (uint16_t)(USART1->DR & (uint16_t)0x01FF);
     switch (RXc) {
       case '0': {
@@ -74,6 +74,6 @@ void USART1_IRQHandler(void) {
     }
   }
 
-  NVIC_ClearPendingIRQ(USART1_IRQn);*/
-}
+  NVIC_ClearPendingIRQ(USART1_IRQn);
+}*/
 

@@ -1,6 +1,7 @@
 #include <stm32f407xx.h>
 #include "buttons.h"
 #include "log.h"
+#include "usart.h"
 
 void RCC_Init(void);
 void TIM1_Init(void);
@@ -8,10 +9,11 @@ void ADC1_Init(void);
 void DMA2_Stream0_Init(void);
 void DMA2_Stream0_IRQHandler(void);
 
-uint16_t buffer_in[8] __attribute__((section(".fast")));
-uint16_t buffer_out[8] __attribute__((section(".fast")));
+char buffer_src[8] __attribute__((section(".fast"))) = "USART-DMA OK!";
+char buffer_in[8] __attribute__((section(".fast")));
+
+
 int main(void) {
-  
   LOG_INIT();
 
   SystemInit();
@@ -87,7 +89,7 @@ void DMA2_Stream0_Init(void) {
   RCC->AHB1ENR |= RCC_AHB1ENR_DMA2EN;
 
   DMA2_Stream0->PAR   =  (uint32_t)&(ADC1->DR);  // адрес периферии
-  DMA2_Stream0->M0AR  =  (uint32_t)buffer;       // адрес памяти
+  DMA2_Stream0->M0AR  =  (uint32_t)buffer_in;       // адрес памяти
   DMA2_Stream0->NDTR  =  8;                      // количество передаваемых данных
   
   DMA2_Stream0->FCR &=  ~(DMA_SxFCR_DMDIS);                   // прямой режим без FIFO
@@ -114,7 +116,7 @@ void DMA2_Stream0_IRQHandler(void) {
   uint8_t i;
   uint16_t ovr = 0; //oversampling
   for(i = 0; i<8; i++) {
-    ovr = ovr + buffer[i];
+    ovr = ovr + buffer_src[i];
   }
 
   LOG_MESSAGE("DMA IRQ");
