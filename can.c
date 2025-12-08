@@ -26,6 +26,7 @@ void CAN2_init(void) {
   CAN2->BTR |= (10 << CAN_BTR_TS1_Pos);
   CAN2->BTR |= (1 << CAN_BTR_TS2_Pos);
   CAN2->BTR &= ~(CAN_BTR_SILM | CAN_BTR_LBKM); // LOOP OFF, SILENT OFF
+  CAN2->BTR |= CAN_BTR_LBKM;   // добавить в CAN2_init() после настройки BTR
 
   // фильтрация по Frame ID
   // list mode
@@ -35,11 +36,10 @@ void CAN2_init(void) {
   CAN1->FM1R  |=  CAN_FM1R_FBM14;           // 14 банк фильтров ( 0-13 кан1, 14-28 кан2 )
   CAN1->FS1R  &= ~(CAN_FS1R_FSC14);         // 16 бит длина фильтра
   CAN1->FFA1R &= ~(CAN_FFA1R_FFA14);        // сохранение в FIFO0
-  CAN1->sFilterRegister[14].FR1 = (CAN_RX_FRAME_ID <<5); // FRAME_ID фильтра
   CAN1->FA1R  |=  (1<<CAN_FA1R_FACT14_Pos); // активируем фильтр 14
   CAN1->FMR   &= ~CAN_FMR_FINIT;            // режим инит выключаем  (фильтры включаются)
 
-  
+  CAN1->sFilterRegister[14].FR1 = (CAN_RX_FRAME_ID <<5); // FRAME_ID фильтрая
 
   CAN2->MCR &= ~(CAN_MCR_INRQ);             // кан2 инит выключаем (то есть модуль включаем)
   while((CAN2->MSR & CAN_MSR_INAK) !=0) {}; // ждем пока не активируется
@@ -47,7 +47,7 @@ void CAN2_init(void) {
 
 uint8_t CAN2_Receive_msg(uint16_t *frame_ID, uint16_t *data_len_bytes, char rx_array[]) {
   if((CAN2->RF0R & CAN_RF0R_FMP0) != 0) { // FIFO не пустая?
-    *frame_ID = ((CAN2 -> sFIFOMailBox[0].RDTR >> CAN_RDT0R_DLC_Pos) & 0x000F);
+    *frame_ID = ((CAN2 -> sFIFOMailBox[0].RDTR >> CAN_RI0R_STID_Pos) & 0x0FFF);
     *data_len_bytes = ((CAN2 -> sFIFOMailBox[0].RDTR >> CAN_RDT0R_DLC_Pos) & 0x000F);
 
     for(uint16_t i=0; i< *data_len_bytes; i++) {
@@ -60,7 +60,7 @@ uint8_t CAN2_Receive_msg(uint16_t *frame_ID, uint16_t *data_len_bytes, char rx_a
     CAN2 -> RF0R |= CAN_RF0R_RFOM0; //освобождение fifo0
     return 0;
   } else {
-    return 1;
+    return 1; //fifo0 is empty! cant read
   }
 }
 

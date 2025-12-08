@@ -18,6 +18,9 @@ uint16_t can_rx_frame_id = 0;
 uint16_t can_rx_data_len = 0;
 uint8_t can_err_code = 0;
 
+uint8_t stop_send = 0;
+uint8_t stop_receive = 0;
+
 int main(void) {
   LOG_INIT();
 
@@ -34,29 +37,30 @@ int main(void) {
 
   while(1) {
     //can_tx_data_bytes[0] = ( (B3_state <<2) | (B2_state <<1) | B1_state);
-    if(can_tx_ms_count < CAN_TX_TIME_MS) continue;
-
-    can_tx_ms_count=0;
-    can_err_code = CAN2_Send_msg(CAN_TX_FRAME_ID, CAN_TX_DATA_LEN, can_tx_data_bytes);
-    if(can_err_code != 0) {
-      LOG_MESSAGE("Can send message error %d", can_err_code);
-    } else {
-      LOG_MESSAGE("Can send message success");
+    if(!stop_send && can_tx_ms_count < CAN_TX_TIME_MS) {
+      can_tx_ms_count=0;
+      can_err_code = CAN2_Send_msg(CAN_TX_FRAME_ID, CAN_TX_DATA_LEN, can_tx_data_bytes);
+      if(can_err_code != 0) {
+        LOG_MESSAGE("Can send message error %d", can_err_code);
+        stop_send = 1;
+      } else {
+        LOG_MESSAGE("Can send message success");
+      }
+      GPIO_LED_toggle(LED01);
     }
-    GPIO_LED_toggle(LED01);
 
-    can_err_code = CAN2_Receive_msg(&can_rx_frame_id, &can_rx_data_len, can_rx_data_bytes);
+    if(!stop_receive) {
+      can_err_code = CAN2_Receive_msg(&can_rx_frame_id, &can_rx_data_len, can_rx_data_bytes);
 
-    if(can_rx_frame_id == 0) {
-      LOG_MESSAGE("Can RX Frame ID empty");
-      continue;
+      if(can_err_code == 0) {
+        LOG_MESSAGE("Can receive message success");
+        USART_send_bytes(USART1, can_rx_data_bytes, can_rx_data_len); 
+      } else {
+        //stop_receive = 1;
+        //LOG_MESSAGE("Can receive message error %d", can_err_code);
+      }
     }
-    if(can_err_code == 0) {
-      LOG_MESSAGE("Can receive message success");
-      USART_send_bytes(USART1, can_rx_data_bytes, can_rx_data_len); 
-    } else {
-      LOG_MESSAGE("Can receive message error %d", can_err_code);
-    }
+    
   }
 }
 
