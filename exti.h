@@ -4,6 +4,8 @@
 #include "validation.h"
 #include "tools.h"
 
+#define BTN_THRESHOLD 200
+
 // init signle EXTI line
 #define EXTI_init_line(line) EXTI->PR |= EXTI_PR_PR##line; \
 _Static_assert(IS_VALID_PIN(line), "Invalid EXTI line: " #line); \

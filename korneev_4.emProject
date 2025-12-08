@@ -78,6 +78,7 @@
       <folder Name="lib">
         <folder Name="inc">
           <file file_name="buttons.h" />
+          <file file_name="can.h" />
           <file file_name="event.h" />
           <file file_name="exti.h" />
           <file file_name="fsm.h" />
@@ -91,6 +92,7 @@
         </folder>
         <folder Name="src">
           <file file_name="buttons.c" />
+          <file file_name="can.c" />
           <file file_name="event.c" />
           <file file_name="fsm.c" />
           <file file_name="i2c.c" />

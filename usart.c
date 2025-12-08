@@ -11,6 +11,13 @@ void USART_send_string(USART_TypeDef *usart, const char *s) {
     }
 }
 
+void USART_send_bytes(USART_TypeDef *usart, const char *s, const uint32_t len) {
+    for(uint32_t i = 0; i<len; i++) {
+        while (!(usart->SR & USART_SR_TXE)); // waiting buffer
+        usart->DR = *s++;
+    }
+}
+
 void USART_init(void) { 
   if(USART_Initialized) {
     LOG_MESSAGE("USART re-initialize error");
@@ -39,7 +46,7 @@ void USART_init(void) {
   USART1-> CR1 |= USART_CR1_UE; // enable USART
 
   //dma
-  USART1->CR3 |= USART_CR3_DMAT;
+  //USART1->CR3 |= USART_CR3_DMAT;
 
   GPIOA->MODER |= 0b10 << GPIO_MODER_MODE9_Pos;
   GPIOA->AFR[1] |= (7<<GPIO_AFRH_AFSEL9_Pos) | (7<<GPIO_AFRH_AFSEL10_Pos);
