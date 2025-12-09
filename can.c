@@ -21,10 +21,14 @@ void CAN2_init(void) {
   CAN2->MCR |= CAN_MCR_AWUM;  // auto sleepmode off on message receive
   CAN2->BTR  = 0x00;          // RESET
   
-  // В ЛЕКЦИИ ЕСТЬ РАСЧЕТЫ
-  CAN2->BTR |= (5 << CAN_BTR_BRP_Pos);
-  CAN2->BTR |= (10 << CAN_BTR_TS1_Pos);
-  CAN2->BTR |= (1 << CAN_BTR_TS2_Pos);
+  // 42 MHz / 250 000 / 15 = 11.2
+  // 42 / 12 = 3.5 MHz
+  // 3.5 MHz / 250 000 = 14
+  // CAN_Bit_time = (1 + BS1 + BS2 ) = 14*tq
+  CAN2 -> BTR |= (11 << CAN_BTR_BRP_Pos);      // предделитель равен 12: 42 / 12 = 3.5 МГц частота тактирования CAN
+  CAN2 -> BTR |= (9 << CAN_BTR_TS1_Pos);     // TS1 = 9, BS1 = 10
+  CAN2 -> BTR |= (2 << CAN_BTR_TS2_Pos);      // TS2 = 2 , BS2 = 3
+
   CAN2->BTR &= ~(CAN_BTR_SILM | CAN_BTR_LBKM); // LOOP OFF, SILENT OFF
   //CAN2->BTR |= CAN_BTR_LBKM;   // добавить в CAN2_init() после настройки BTR
 
