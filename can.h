@@ -2,7 +2,7 @@
 #define CAN_H
 
 #include <stdint.h>
-#define CAN_TX_TIME_MS    300     // время ожидания отправки сообщения
+#define CAN_TX_TIME_MS    3000     // время ожидания отправки сообщения
 #define CAN_TX_DATA_LEN   8       // количество байт данных в отправляемом сообщении CAN
 
 #define CAN_RX_FRAME_ID       0x567   // FRAME_ID сообщений, которые мы принимаем, остальные игнорируем

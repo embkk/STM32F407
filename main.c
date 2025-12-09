@@ -37,27 +37,25 @@ int main(void) {
 
   while(1) {
     //can_tx_data_bytes[0] = ( (B3_state <<2) | (B2_state <<1) | B1_state);
-    if(!stop_send && can_tx_ms_count < CAN_TX_TIME_MS) {
+    if(!stop_send && can_tx_ms_count >= CAN_TX_TIME_MS) {
       can_tx_ms_count=0;
       can_err_code = CAN2_Send_msg(CAN_TX_FRAME_ID, CAN_TX_DATA_LEN, can_tx_data_bytes);
       if(can_err_code != 0) {
-        LOG_MESSAGE("Can send message error %d", can_err_code);
-        stop_send = 1;
-      } else {
-        LOG_MESSAGE("Can send message success");
+        LOG_MESSAGE("[%d] Can send message error %d", btn_ms_count, can_err_code);
+        //stop_send = 1;
       }
       GPIO_LED_toggle(LED01);
     }
 
     if(!stop_receive) {
       can_err_code = CAN2_Receive_msg(&can_rx_frame_id, &can_rx_data_len, can_rx_data_bytes);
-
+      if(can_rx_frame_id!=0) LOG_MESSAGE("[%d] %d %d %d", btn_ms_count, can_rx_frame_id, can_rx_data_len, can_rx_data_bytes);
       if(can_err_code == 0) {
-        LOG_MESSAGE("Can receive message success");
+        LOG_MESSAGE("[%d] Can receive message success", btn_ms_count);
         USART_send_bytes(USART1, can_rx_data_bytes, can_rx_data_len); 
-      } else {
+      } else if(can_err_code>1) {
         //stop_receive = 1;
-        //LOG_MESSAGE("Can receive message error %d", can_err_code);
+        LOG_MESSAGE("Can receive message error %d", can_err_code);
       }
     }
     

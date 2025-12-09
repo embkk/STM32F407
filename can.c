@@ -26,7 +26,7 @@ void CAN2_init(void) {
   CAN2->BTR |= (10 << CAN_BTR_TS1_Pos);
   CAN2->BTR |= (1 << CAN_BTR_TS2_Pos);
   CAN2->BTR &= ~(CAN_BTR_SILM | CAN_BTR_LBKM); // LOOP OFF, SILENT OFF
-  CAN2->BTR |= CAN_BTR_LBKM;   // добавить в CAN2_init() после настройки BTR
+  //CAN2->BTR |= CAN_BTR_LBKM;   // добавить в CAN2_init() после настройки BTR
 
   // фильтрация по Frame ID
   // list mode
