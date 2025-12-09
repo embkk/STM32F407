@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "buttons.h"
-#include "exti.h"
 #include "log.h"
 #include "can.h"
 #include "usart.h"
+#include "gpio.h"
  
 void RCC_Init(void);
+void Check_CAN(void);
 
 uint16_t can_tx_ms_count = 0;
 uint16_t btn_ms_count = 0;
@@ -30,55 +31,52 @@ int main(void) {
 
   LED_init();
   Buttons_init();
-  EXTI_init_lines(10,11,12);
   
   USART_init();
   CAN2_init();
 
   while(1) {
-    //can_tx_data_bytes[0] = ( (B3_state <<2) | (B2_state <<1) | B1_state);
-    if(!stop_send && can_tx_ms_count >= CAN_TX_TIME_MS) {
-      can_tx_ms_count=0;
-      can_err_code = CAN2_Send_msg(CAN_TX_FRAME_ID, CAN_TX_DATA_LEN, can_tx_data_bytes);
-      if(can_err_code != 0) {
-        LOG_MESSAGE("[%d] Can send message error %d", btn_ms_count, can_err_code);
-        //stop_send = 1;
-      }
-      GPIO_LED_toggle(LED01);
-    }
-
-    if(!stop_receive) {
-      can_err_code = CAN2_Receive_msg(&can_rx_frame_id, &can_rx_data_len, can_rx_data_bytes);
-      if(can_rx_frame_id!=0) LOG_MESSAGE("[%d] %d %d %d", btn_ms_count, can_rx_frame_id, can_rx_data_len, can_rx_data_bytes);
-      if(can_err_code == 0) {
-        LOG_MESSAGE("[%d] Received %d %d [%s]", btn_ms_count, can_rx_frame_id, can_rx_data_len, can_rx_data_bytes);
-        USART_send_bytes(USART1, can_rx_data_bytes, can_rx_data_len); 
-      } else if(can_err_code>1) {
-        //stop_receive = 1;
-        LOG_MESSAGE("Can receive message error %d", can_err_code);
-      }
-    }
-    
+    Check_CAN();
   }
-} 
-
-void EXTI15_10_IRQHandler(void) {
-  if(btn_ms_count>BTN_THRESHOLD) {
-    btn_ms_count = 0;
-    /*EXTI_handle(10, callback);
-    EXTI_handle(11, callback);
-    EXTI_handle(12, callback);*/
-  } else {
-    EXTI_clear_ps(10);
-    EXTI_clear_ps(11);
-    EXTI_clear_ps(12);
-  }
-
-  NVIC_ClearPendingIRQ(EXTI15_10_IRQn);
 }
+
+void Check_CAN(void) {
+  can_err_code = CAN2_Receive_msg(&can_rx_frame_id, &can_rx_data_len, can_rx_data_bytes);
+  if(can_err_code == 0) {
+    if(can_rx_frame_id == CAN_RX_FRAME_LED_CONTROL) {
+      LOG_MESSAGE("[%d] Received %d %d [%s]", btn_ms_count, can_rx_frame_id, can_rx_data_len, can_rx_data_bytes);  
+      GPIO_LED_all_off();
+      if(can_rx_data_bytes[0] & 0b001) {
+        GPIO_LED_on(LED01);
+      }
+      if(can_rx_data_bytes[0] & 0b010) {
+        GPIO_LED_on(LED02);
+      }
+      if(can_rx_data_bytes[0] & 0b100) {
+        GPIO_LED_on(LED03);
+      }
+    } else if (can_rx_frame_id == CAN_RX_FRAME_LED_STATE) {
+      //LOG_MESSAGE("[%d] Received %d %d [%s]", btn_ms_count, can_rx_frame_id, can_rx_data_len, can_rx_data_bytes);
+      //LOG_MESSAGE("[%d] Send response %d [%s]", btn_ms_count, can_rx_frame_id, btn_state);
+      CAN2_Send_msg(CAN_TX_FRAME_ID, 3, (char*)btn_state);
+    } else if (can_rx_frame_id>0) {
+      LOG_MESSAGE("[%d] Received unknown frame %d", btn_ms_count, can_rx_frame_id);  
+    }
+  } else if(can_err_code>1) {
+    //stop_receive = 1;
+    LOG_MESSAGE("Receive message error %d", can_err_code);
+  }
+}
+
+
+
 
 void SysTick_Handler(void)
 {
   btn_ms_count++;
+  if(btn_ms_count> BTN_CHECK_MS) {
+    btn_ms_count=0;
+    Buttons_check();
+  }
   can_tx_ms_count++;
 }

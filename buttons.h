@@ -5,11 +5,13 @@
 #include "event.h"
 #include "log.h"
 
-#define BUTTON_BOUND_TIMEOUT 200
+#define BTN_PRESS_COUNT 4
+#define BTN_CHECK_MS 20
+
+extern uint8_t btn_state[3];
 
 void Buttons_init(void);
 void LED_init(void);
-
-extern uint16_t bound_timer;
+void Buttons_check(void);
 
 #endif

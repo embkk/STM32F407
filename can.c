@@ -36,11 +36,10 @@ void CAN2_init(void) {
   CAN1->FM1R  |=  CAN_FM1R_FBM14;           // 14 банк фильтров ( 0-13 кан1, 14-28 кан2 )
   CAN1->FS1R  &= ~(CAN_FS1R_FSC14);         // 16 бит длина фильтра
   CAN1->FFA1R &= ~(CAN_FFA1R_FFA14);        // сохранение в FIFO0
-  CAN1->sFilterRegister[14].FR1 = (CAN_RX_FRAME_ID1 <<5); // FRAME_ID фильтрая
+  CAN1->sFilterRegister[14].FR1 = (CAN_RX_FRAME_LED_CONTROL <<5); // FRAME_ID фильтрая
+  CAN1->sFilterRegister[14].FR2 = (CAN_RX_FRAME_LED_STATE <<5); // FRAME_ID фильтрая
   CAN1->FA1R  |=  (1<<CAN_FA1R_FACT14_Pos); // активируем фильтр 14
   CAN1->FMR   &= ~CAN_FMR_FINIT;            // режим инит выключаем  (фильтры включаются)
-
-  
 
   CAN2->MCR &= ~(CAN_MCR_INRQ);             // кан2 инит выключаем (то есть модуль включаем)
   while((CAN2->MSR & CAN_MSR_INAK) !=0) {}; // ждем пока не активируется
