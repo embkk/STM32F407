@@ -48,7 +48,7 @@ void CAN2_init(void) {
 
 uint8_t CAN2_Receive_msg(uint16_t *frame_ID, uint16_t *data_len_bytes, char rx_array[]) {
   if((CAN2->RF0R & CAN_RF0R_FMP0) != 0) { // FIFO не пустая?
-    *frame_ID = ((CAN2 -> sFIFOMailBox[0].RDTR >> CAN_RI0R_STID_Pos) & 0x0FFF);
+    *frame_ID = ((CAN2 -> sFIFOMailBox[0].RIR >> CAN_RI0R_STID_Pos) & 0x0FFF);
     *data_len_bytes = ((CAN2 -> sFIFOMailBox[0].RDTR >> CAN_RDT0R_DLC_Pos) & 0x000F);
 
     for(uint16_t i=0; i< *data_len_bytes; i++) {

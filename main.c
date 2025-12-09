@@ -51,7 +51,7 @@ int main(void) {
       can_err_code = CAN2_Receive_msg(&can_rx_frame_id, &can_rx_data_len, can_rx_data_bytes);
       if(can_rx_frame_id!=0) LOG_MESSAGE("[%d] %d %d %d", btn_ms_count, can_rx_frame_id, can_rx_data_len, can_rx_data_bytes);
       if(can_err_code == 0) {
-        LOG_MESSAGE("[%d] Can receive message success", btn_ms_count);
+        LOG_MESSAGE("[%d] Received %d %d [%s]", btn_ms_count, can_rx_frame_id, can_rx_data_len, can_rx_data_bytes);
         USART_send_bytes(USART1, can_rx_data_bytes, can_rx_data_len); 
       } else if(can_err_code>1) {
         //stop_receive = 1;
