@@ -12,7 +12,7 @@ void RCC_Init(void);
 uint16_t can_tx_ms_count = 0;
 uint16_t btn_ms_count = 0;
 
-char can_tx_data_bytes[CAN_TX_DATA_LEN] = {11,22,33,44,55,66,77,88};
+char can_tx_data_bytes[CAN_TX_DATA_LEN] = {0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88};
 char can_rx_data_bytes[CAN_TX_DATA_LEN] = {};
 uint16_t can_rx_frame_id = 0;
 uint16_t can_rx_data_len = 0;
@@ -60,7 +60,7 @@ int main(void) {
     }
     
   }
-}
+} 
 
 void EXTI15_10_IRQHandler(void) {
   if(btn_ms_count>BTN_THRESHOLD) {
