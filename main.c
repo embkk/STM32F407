@@ -6,13 +6,14 @@
  
 void RCC_Init(void);
 
-#define SENSOR_CHECK_TIME_US  300000
+#define SENSOR_CHECK_TIME_US  3000
 
 // 1wire PE2
 #define release_1wire()     (GPIOE->BSRR  |= GPIO_BSRR_BS2)
 #define pull_low_1wire()    (GPIOE->BSRR  |= GPIO_BSRR_BR2)
 #define rx_mode_1wire()     (GPIOE->MODER &= ~GPIO_MODER_MODE2_0)
 #define tx_mode_1wire()     (GPIOE->MODER |= GPIO_MODER_MODE2_0)
+#define check_1wire()       ((GPIOE->IDR & GPIO_IDR_ID2) != 0)
 
 // 1wire ROM
 #define READ_ROM      0x33
@@ -63,7 +64,11 @@ void GPIO_Init() {
   GPIOE->OTYPER |= GPIO_OTYPER_OT2;    //PE2 Open Drain
 }
 
+int t = 0;
 int __SEGGER_RTL_X_file_write(__SEGGER_RTL_FILE *__stream, const char *__s, unsigned __len) {
+  t++;
+  LOG_MESSAGE("%0d %0ds: [%s]", t, __len, __s);
+  return 0;
   for(; __len!=0; --__len) {
     USART1->DR = * __s++;
     while(RESET == READ_BIT(USART1->SR, USART_SR_TXE));
@@ -84,7 +89,11 @@ uint8_t Start_1wire(void) {
   release_1wire();
   rx_mode_1wire();
   Delay_us(100);    // wait 100 us = 60 us pause + 40 us presense pulse
-  if(check_1wire()) {
+  
+  uint8_t state = check_1wire();
+  printf("1wire line state: %d\n", state);  // должно быть 0
+
+  if(state) {
     return 1;       // no presence pulse from 1wire device
   } else {
     Delay_us(200);
@@ -132,7 +141,7 @@ uint8_t ReadByte_1wire(void) {
 }
 
 uint8_t CRC_Calc(uint8_t mass[], uint8_t mass_size, uint8_t POLY) {
-  uint8_t crc, crc_out = 0;
+  uint8_t crc = 0, crc_out = 0;
   uint8_t in_data;
   uint8_t in_bits;
   for(uint8_t j=0; j < mass_size; j++) {
@@ -243,6 +252,9 @@ uint8_t Convert_Temperature(void) {
     Delay_us(100);
     WriteByte_1wire(CONVERT_T);
     Delay_us(100);
+    return OK_1WIRE;
+  } else {
+    return NO_DEVICE_1WIRE;
   }
 }
 
@@ -262,6 +274,7 @@ uint16_t temper_fract;
 float temper_float;
 
 int main(void) {
+  
   LOG_INIT();
 
   SystemInit();
@@ -275,6 +288,7 @@ int main(void) {
   GPIOE->BSRR |=  GPIO_BSRR_BS14;
   GPIOE->BSRR |=  GPIO_BSRR_BS15;
 
+  LOG_MESSAGE("Init complete");
   release_1wire();
   
   while(1) {

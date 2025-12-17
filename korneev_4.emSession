@@ -26,12 +26,12 @@
  <Project>
   <ProjectSessionItem path="PCB Teach Sandbox"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox"/>
-  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;CMSIS Files"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;System Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib"/>
-  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;inc"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;src"/>
-  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;System Files"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;inc"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;CMSIS Files"/>
  </Project>
  <Register1>
   <RegisterWindow invisibleNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="korneev_4_Debug" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -62,11 +62,11 @@
  </Watch1>
  <Watch2>
   <Watches active="1" update="Never">
-   <Watchpoint expression="can_tx_data_bytes" name="can_tx_data_bytes" radix="16" linenumber="260" filename="main.c"/>
-   <Watchpoint expression="can_rx_data_bytes" name="can_rx_data_bytes" radix="16" linenumber="261" filename="main.c"/>
-   <Watchpoint expression="can_rx_frame_id" name="can_rx_frame_id" radix="16" linenumber="262" filename="main.c"/>
-   <Watchpoint expression="can_rx_data_len" name="can_rx_data_len" radix="16" linenumber="263" filename="main.c"/>
-   <Watchpoint expression="can_err_code" name="can_err_code" radix="16" linenumber="264" filename="main.c"/>
+   <Watchpoint expression="can_tx_data_bytes" name="can_tx_data_bytes" radix="16" linenumber="506" filename="main.c"/>
+   <Watchpoint expression="can_rx_data_bytes" name="can_rx_data_bytes" radix="16" linenumber="507" filename="main.c"/>
+   <Watchpoint expression="can_rx_frame_id" name="can_rx_frame_id" radix="16" linenumber="508" filename="main.c"/>
+   <Watchpoint expression="can_rx_data_len" name="can_rx_data_len" radix="16" linenumber="509" filename="main.c"/>
+   <Watchpoint expression="can_err_code" name="can_err_code" radix="16" linenumber="510" filename="main.c"/>
   </Watches>
  </Watch2>
  <Watch3>
@@ -76,15 +76,15 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="52" useTextEdit="1" path="main.c" left="0" selected="1" top="32" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="10" useTextEdit="1" path="usart.h" left="0" top="10" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="59" y="13" useTextEdit="1" path="usart.c" left="0" top="13" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="47" y="66" useTextEdit="1" path="main.c" left="0" selected="1" top="50" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="10" useTextEdit="1" path="usart.h" left="0" top="8" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="57" useTextEdit="1" path="usart.c" left="0" top="51" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="23" y="218" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="218" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="25" y="6" useTextEdit="1" path="exti.h" left="0" top="6" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="17" y="9" useTextEdit="1" path="buttons.h" left="0" top="9" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="23" y="6" useTextEdit="1" path="buttons.c" left="0" top="6" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="75" y="75" useTextEdit="1" path="can.c" left="0" top="41" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="13" useTextEdit="1" path="can.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="9" useTextEdit="1" path="buttons.h" left="0" top="9" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="6" useTextEdit="1" path="buttons.c" left="0" top="6" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="75" useTextEdit="1" path="can.c" left="0" top="72" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="13" useTextEdit="1" path="can.h" left="0" top="10" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="event.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="event.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="35" y="136" useTextEdit="1" path="STM32F4xx/Device/Source/system_stm32f4xx.c" left="0" top="136" codecName="Default"/>

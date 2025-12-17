@@ -49,6 +49,7 @@
       arm_target_trace_clock_speed="84000000"
       arm_target_trace_interface_type="SWO"
       c_user_include_directories=".;$(ProjectDir)/lib/src;$(ProjectDir)/lib/inc"
+      debug_enable_RTT="No"
       debug_initial_breakpoint_set_option="Never"
       debug_target_connection="GDB Server"
       gdb_server_allow_memory_access_during_execution="Yes"
@@ -58,7 +59,10 @@
       gdb_server_port="2331"
       gdb_server_register_access="General and Individual"
       gdb_server_reset_command="reset"
-      gdb_server_type="ST-LINK" />
+      gdb_server_type="ST-LINK"
+      linker_printf_fp_enabled="Float"
+      linker_printf_wchar_enabled="Yes"
+      linker_printf_width_precision_supported="Yes" />
     <folder Name="CMSIS Files">
       <file file_name="STM32F4xx/Device/Include/stm32f4xx.h" />
       <file file_name="STM32F4xx/Device/Source/system_stm32f4xx.c">
