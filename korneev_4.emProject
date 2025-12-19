@@ -77,30 +77,33 @@
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
       <folder Name="lib">
         <folder Name="inc">
-          <file file_name="buttons.h" />
-          <file file_name="can.h" />
-          <file file_name="event.h" />
-          <file file_name="exti.h" />
-          <file file_name="fsm.h" />
-          <file file_name="gpio.h" />
-          <file file_name="i2c.h" />
-          <file file_name="log.h" />
-          <file file_name="spi.h" />
-          <file file_name="tools.h" />
-          <file file_name="usart.h" />
-          <file file_name="validation.h" />
+          <file file_name="lib/inc/buttons.h" />
+          <file file_name="lib/inc/can.h" />
+          <file file_name="lib/inc/delay.h" />
+          <file file_name="lib/inc/event.h" />
+          <file file_name="lib/inc/exti.h" />
+          <file file_name="lib/inc/fsm.h" />
+          <file file_name="lib/inc/gpio.h" />
+          <file file_name="lib/inc/i2c.h" />
+          <file file_name="lib/inc/log.h" />
+          <file file_name="lib/inc/spi.h" />
+          <file file_name="lib/inc/tools.h" />
+          <file file_name="lib/inc/usart.h" />
+          <file file_name="lib/inc/validation.h" />
         </folder>
         <folder Name="src">
-          <file file_name="buttons.c" />
-          <file file_name="can.c" />
-          <file file_name="event.c" />
-          <file file_name="fsm.c" />
-          <file file_name="i2c.c" />
-          <file file_name="log.c" />
-          <file file_name="RCC_Init.c" />
-          <file file_name="spi.c" />
-          <file file_name="test.c" />
-          <file file_name="usart.c" />
+          <file file_name="lib/src/buttons.c" />
+          <file file_name="lib/src/can.c" />
+          <file file_name="lib/src/delay.c" />
+          <file file_name="lib/src/event.c" />
+          <file file_name="lib/src/fsm.c" />
+          <file file_name="lib/src/gpio.c" />
+          <file file_name="lib/src/i2c.c" />
+          <file file_name="lib/src/log.c" />
+          <file file_name="lib/src/RCC_Init.c" />
+          <file file_name="lib/src/spi.c" />
+          <file file_name="lib/src/test.c" />
+          <file file_name="lib/src/usart.c" />
         </folder>
       </folder>
       <file file_name="main.c" />

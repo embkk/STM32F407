@@ -13,7 +13,7 @@
       }
 
       // Массивоподобный доступ к полям структуры
-      char (*messages)[LOG_FIELD_LIMIT] = (char (*)[LOG_MESSAGE_TEXT_LENGTH])&Log; // Приводим к массиву char[50]
+      char (*messages)[LOG_FIELD_LIMIT] = (char (*)[LOG_FIELD_LIMIT])&Log; // Приводим к массиву char[50]
       char* target = messages[log_current_index]; // Выбираем поле messageN
 
       // Записываем форматированное сообщение
