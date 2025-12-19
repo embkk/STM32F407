@@ -1,0 +1,36 @@
+#include "delay.h"
+
+  uint16_t us_delay;
+  uint16_t ms_delay;
+  uint16_t sec_delay;
+
+void timer_counter(void) {
+  static uint16_t us_counter;
+  static uint16_t ms_counter;
+  static uint16_t sec_counter;
+  if(us_counter < 1000 ){
+    us_counter++;
+    us_delay++;
+  } else {
+    us_delay = 0;
+    if(ms_counter<1000) {
+      ms_counter++;
+      ms_delay++;
+    } else {
+      ms_counter = 0;
+      if(sec_counter < 1000) {
+        sec_counter++;
+        sec_delay++;
+      } else {
+        sec_counter = 0;
+      }
+    }
+  }
+}
+
+void Delay_us(uint32_t us) {
+}
+void Delay_ms(uint32_t ms) {
+}
+void Delay_sec(uint32_t sec) {
+}
