@@ -1,4 +1,5 @@
 #include "delay.h"
+#include "cmsis_gcc.h"
 
   uint16_t us_delay;
   uint16_t ms_delay;
@@ -29,8 +30,22 @@ void timer_counter(void) {
 }
 
 void Delay_us(uint32_t us) {
+  us_delay = 0;
+  while(us_delay < us) {
+    __NOP();
+  }
 }
 void Delay_ms(uint32_t ms) {
+  ms_delay = 0;
+  while(ms_delay < ms) {
+    __NOP();
+  }
+
 }
 void Delay_sec(uint32_t sec) {
+  sec_delay = 0;
+  while(sec_delay < sec) {
+    __NOP();
+  }
+
 }
