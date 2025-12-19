@@ -28,5 +28,5 @@ int main(void) {
 
 void SysTick_Handler(void)
 {
-
+  timer_counter();
 }

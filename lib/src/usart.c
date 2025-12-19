@@ -18,7 +18,49 @@ void USART_send_bytes(USART_TypeDef *usart, const char *s, const uint32_t len) {
     }
 }
 
-void USART_init(void) { 
+char USART_receive_byte(USART_TypeDef*usart, uint8_t *rx_byte) {
+  uint8_t timer = 0;
+  while(!(usart->SR & USART_SR_RXNE)) {
+    timer++;
+    if(timer==32) return USART_ERR;
+  }
+  *rx_byte = usart->DR;
+  return USART_OK;
+}
+void USART6_init(void) { 
+  if(USART_Initialized) {
+    LOG_MESSAGE("USART re-initialize error");
+    return;
+  }
+
+  RCC -> AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+  RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
+
+  /*
+    84Mhz / 115200 / 16 = 45,572916667
+    
+    M = 45 (0x2D)
+    F = 0,57 * 16 = 9.12 (0x9)
+  */
+
+  USART1-> BRR = 0x02D9; // бод
+
+  //             interrupt          transmitter+   receiver+
+  USART1-> CR1 = USART_CR1_RXNEIE | USART_CR1_TE | USART_CR1_RE;
+
+  GPIOA->MODER |= GPIO_MODER_MODE6_1 | GPIO_MODER_MODE7_1;
+  GPIOA->AFR[0] |= (8<<GPIO_AFRL_AFSEL6_Pos) | (8<<GPIO_AFRL_AFSEL7_Pos);
+  
+  //              word length       parity conntrol
+  USART1->CR1 &= ~(USART_CR1_M) | ~(USART_CR1_PCE);
+  USART1->CR2 &= ~(USART_CR2_STOP); //1 stopbit
+  USART1-> CR1 |= USART_CR1_UE; // enable USART
+
+
+  USART_Initialized = 1;
+}
+
+void USART1_init(void) { 
   if(USART_Initialized) {
     LOG_MESSAGE("USART re-initialize error");
     return;
