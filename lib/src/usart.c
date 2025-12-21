@@ -59,7 +59,8 @@ void USART6_init(void) {
   USART6->CR1 &= ~(USART_CR1_M) | ~(USART_CR1_PCE);
   USART6->CR2 &= ~(USART_CR2_STOP); //1 stopbit
   USART6-> CR1 |= USART_CR1_UE; // enable USART
-
+  
+  USART6->CR1 |= USART_CR1_RXNEIE;
 
   USART_Initialized = 1;
 }

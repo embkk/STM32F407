@@ -11,6 +11,16 @@ void RCC_Init(void);
 uint8_t rs485_rx_byte;
 char rs485_tx_array[12] = "RS485 RX Ok\n";
 
+void USART6_IRQHandler(void) {
+  if(USART6->SR & USART_SR_RXNE) {
+    
+  }
+  NVIC_ClearPendingIRQ(USART6_IRQn);
+}
+
+void TIM2_IRQHandler(void) {
+}
+
 int main(void) {
   LOG_INIT();
 
