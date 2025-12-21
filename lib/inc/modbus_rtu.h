@@ -7,6 +7,12 @@
 #include "crc16.h"
 #include "timer.h"
 
+#define LED1_PORT     GPIOE
+#define LED1_PIN_NUM  13
+#define BTN_PORT      GPIOE
+#define BTN1_PIN_NUM  10
+
+
 //----------- Modbus timer constants -----------------
 #define USART_BAUD_USED		115200
 #define USART_BYTE_TIME_US	(1000000 * 12) / USART_BAUD_USED 	// BYTE send in 12 bits maximum

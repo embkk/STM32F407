@@ -27,6 +27,8 @@ int main(void) {
   __enable_irq();
 
   LED_init();
+  Buttons_init();
+
   USART6_init();
   
   SysTick_Config(SYSTICK_TIMER_CONST);

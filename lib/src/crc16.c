@@ -1,6 +1,6 @@
 #include "crc16.h"
 
-uint16_t CRC16_calc(uint8_t mass[], uint8_t mass_len) {
+uint16_t CRC16_Calc(uint8_t mass[], uint8_t mass_len) {
   uint16_t crc16_reg = 0xFFFF;
   for(uint8_t i =0; i< mass_len; i++ ) {
     crc16_reg = crc16_reg ^ ( mass[i] & 0x00FF );
