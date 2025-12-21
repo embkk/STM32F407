@@ -13,4 +13,5 @@ void USART_send_string(USART_TypeDef*, const char*);
 void USART1_init(void);
 void USART6_init(void);
 
+char USART_receive_byte(USART_TypeDef*, uint8_t*);
 #endif
