@@ -79,6 +79,7 @@
         <folder Name="inc">
           <file file_name="lib/inc/buttons.h" />
           <file file_name="lib/inc/can.h" />
+          <file file_name="lib/inc/crc16.h" />
           <file file_name="lib/inc/delay.h" />
           <file file_name="lib/inc/event.h" />
           <file file_name="lib/inc/exti.h" />
@@ -88,6 +89,7 @@
           <file file_name="lib/inc/log.h" />
           <file file_name="lib/inc/modbus_rtu.h" />
           <file file_name="lib/inc/spi.h" />
+          <file file_name="lib/inc/timer.h" />
           <file file_name="lib/inc/tools.h" />
           <file file_name="lib/inc/usart.h" />
           <file file_name="lib/inc/validation.h" />
@@ -95,16 +97,20 @@
         <folder Name="src">
           <file file_name="lib/src/buttons.c" />
           <file file_name="lib/src/can.c" />
+          <file file_name="lib/src/crc16.c" />
           <file file_name="lib/src/delay.c" />
           <file file_name="lib/src/event.c" />
           <file file_name="lib/src/fsm.c" />
           <file file_name="lib/src/gpio.c" />
           <file file_name="lib/src/i2c.c" />
           <file file_name="lib/src/log.c" />
-          <file file_name="lib/src/modbus_rtu.c" />
+          <file file_name="lib/src/modbus_rtu.c">
+            <configuration Name="Debug" build_exclude_from_build="Yes" />
+          </file>
           <file file_name="lib/src/RCC_Init.c" />
           <file file_name="lib/src/spi.c" />
           <file file_name="lib/src/test.c" />
+          <file file_name="lib/src/timer.c" />
           <file file_name="lib/src/usart.c" />
         </folder>
       </folder>
