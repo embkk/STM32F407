@@ -5,7 +5,7 @@
 
 #define AHB1_FREQ_HZ              84000000
 #define SYSTICK_TIMER_PERIOD_US   1
-#define SYSTICK_TIMER_CONST       ( ( ( AHB1_FREQ_HZ * ( SYSTICK_TIMER_PERIOD_US ) ) / 1000000 ) - 1 )
+#define SYSTICK_TIMER_CONST       ( AHB1_FREQ_HZ * SYSTICK_TIMER_PERIOD_US / 1000 - 1 )
 
 void timer_counter(void);
 
