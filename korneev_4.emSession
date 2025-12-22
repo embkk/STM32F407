@@ -1,7 +1,9 @@
 <!DOCTYPE CrossStudio_Session_File>
 <session>
  <Bookmarks/>
- <Breakpoints groups="Breakpoints" active_group="Breakpoints"/>
+ <Breakpoints groups="Breakpoints" active_group="Breakpoints">
+  <BreakpointListItem trigger="" line="454" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" stopAll="false" group="Breakpoints" type="Breakpoint" state="2" filename="lib/src/modbus_rtu.c" useHWbreakpoint="false"/>
+ </Breakpoints>
  <ExecutionProfileWindow/>
  <FrameBuffer>
   <FrameBufferWindow width="0" keepAspectRatio="0" zoomToFitWindow="0" showGrid="0" addressSpace="" format="0" height="0" autoEvaluate="0" scaleFactor="1" refreshPeriod="0" name="korneev_4_Debug" addressText="" accessByDisplayWidth="0"/>
@@ -62,11 +64,11 @@
  </Watch1>
  <Watch2>
   <Watches active="1" update="Never">
-   <Watchpoint expression="can_tx_data_bytes" name="can_tx_data_bytes" radix="16" linenumber="266" filename="main.c"/>
-   <Watchpoint expression="can_rx_data_bytes" name="can_rx_data_bytes" radix="16" linenumber="267" filename="main.c"/>
-   <Watchpoint expression="can_rx_frame_id" name="can_rx_frame_id" radix="16" linenumber="268" filename="main.c"/>
-   <Watchpoint expression="can_rx_data_len" name="can_rx_data_len" radix="16" linenumber="269" filename="main.c"/>
-   <Watchpoint expression="can_err_code" name="can_err_code" radix="16" linenumber="270" filename="main.c"/>
+   <Watchpoint expression="can_tx_data_bytes" name="can_tx_data_bytes" radix="16" linenumber="278" filename="main.c"/>
+   <Watchpoint expression="can_rx_data_bytes" name="can_rx_data_bytes" radix="16" linenumber="279" filename="main.c"/>
+   <Watchpoint expression="can_rx_frame_id" name="can_rx_frame_id" radix="16" linenumber="280" filename="main.c"/>
+   <Watchpoint expression="can_rx_data_len" name="can_rx_data_len" radix="16" linenumber="281" filename="main.c"/>
+   <Watchpoint expression="can_err_code" name="can_err_code" radix="16" linenumber="282" filename="main.c"/>
    <Watchpoint expression="ms_delay" name="ms_delay" radix="-1" linenumber="39" filename="lib/src/delay.c"/>
    <Watchpoint expression="ms" name="ms" radix="-1" linenumber="40" filename="lib/src/delay.c"/>
   </Watches>
@@ -78,7 +80,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="44" useTextEdit="1" path="main.c" left="0" selected="1" top="44" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="24" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="23" y="218" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="218" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="35" y="136" useTextEdit="1" path="STM32F4xx/Device/Source/system_stm32f4xx.c" left="0" top="136" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/buttons.h" left="0" top="0" codecName="Default"/>
@@ -86,13 +88,13 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="14" useTextEdit="1" path="lib/inc/delay.h" left="0" top="14" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/can.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/event.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="4" y="25" useTextEdit="1" path="lib/src/modbus_rtu.c" left="0" top="25" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="27" y="82" useTextEdit="1" path="lib/inc/modbus_rtu.h" left="0" top="82" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="31" y="72" useTextEdit="1" path="lib/src/modbus_rtu.c" left="0" selected="1" top="48" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="30" y="47" useTextEdit="1" path="lib/inc/modbus_rtu.h" left="0" top="180" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/timer.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/crc16.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/src/crc16.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/src/timer.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/usart.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="49" y="10" useTextEdit="1" path="lib/inc/usart.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="63" useTextEdit="1" path="lib/src/usart.c" left="0" top="63" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/unmanned-john-doe/git/embedded/STM32F407/lib/src" debugSearchPath="" autoConnectCapabilities="1343"/>
