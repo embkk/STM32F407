@@ -192,7 +192,7 @@ uint8_t CheckDataValue(uint8_t op_code_in, uint8_t rx_request[]){
 
 	}
 
-
+  return 7;
 }
 
 
@@ -451,7 +451,7 @@ uint8_t AnswerTransmit(uint8_t err_code, uint8_t tx_array[], uint8_t *tx_array_l
 	tx_array[*tx_array_len] = (crc_calc & 0x00FF);		// CRC16 LSB send first 
 	tx_array[*tx_array_len+1] = (crc_calc >> 8);			// CRC16 MSB send last
 	
-	USART_send_bytes(USART6, tx_array, (*tx_array_len+2) );
+	USART_send_bytes(USART6, (char*)tx_array, (*tx_array_len+2) );
 	
 	ModbusRxState = MB_RX_IDLE;
 
