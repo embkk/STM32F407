@@ -7,7 +7,7 @@ uint16_t CRC16_Calc(uint8_t mass[], uint8_t mass_len) {
     for(uint8_t j=0; j<BYTE_LEN; j++) {
       if(crc16_reg & 0x0001) {
         crc16_reg = crc16_reg >> 1;
-        crc16_reg = crc16_reg & POLY_16;
+        crc16_reg = crc16_reg ^ POLY_16;
       } else {
         crc16_reg = crc16_reg >> 1;
       }

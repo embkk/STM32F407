@@ -441,6 +441,7 @@ uint8_t AnswerTransmit(uint8_t err_code, uint8_t tx_array[], uint8_t *tx_array_l
 	uint16_t crc_calc;
 	
 	if(err_code != MODBUS_OK){
+                tx_array[0] = DEVICE_ADDR;
 		tx_array[1] = op_code + ERR_ANSWER_ADD;
 		tx_array[2] = err_code;
 		*tx_array_len = 3; // CRC16 2-bytes will be calculated later

@@ -48,6 +48,9 @@ int main(void) {
 
   while(1) {
     modbus_err = RequestParsingOperationExec();
+    if(modbus_err!=0) {
+      LOG_MESSAGE("Modbus 0x%X", modbus_err);
+    }
   }
 }
 
