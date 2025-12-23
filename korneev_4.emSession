@@ -2,7 +2,7 @@
 <session>
  <Bookmarks/>
  <Breakpoints groups="Breakpoints" active_group="Breakpoints">
-  <BreakpointListItem trigger="" line="454" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" stopAll="false" group="Breakpoints" type="Breakpoint" state="2" filename="lib/src/modbus_rtu.c" useHWbreakpoint="false"/>
+  <BreakpointListItem trigger="" line="454" counter="0" hardwareBreakpoint="" isFunctionBreakpoint="false" action="" expression="" stopAll="false" group="Breakpoints" type="Breakpoint" state="4" filename="lib/src/modbus_rtu.c" useHWbreakpoint="false"/>
  </Breakpoints>
  <ExecutionProfileWindow/>
  <FrameBuffer>
@@ -80,7 +80,7 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="24" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="13" y="24" useTextEdit="1" path="main.c" left="0" top="24" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="23" y="218" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="218" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="35" y="136" useTextEdit="1" path="STM32F4xx/Device/Source/system_stm32f4xx.c" left="0" top="136" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/buttons.h" left="0" top="0" codecName="Default"/>
@@ -88,13 +88,13 @@
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="14" useTextEdit="1" path="lib/inc/delay.h" left="0" top="14" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/can.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/event.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="31" y="72" useTextEdit="1" path="lib/src/modbus_rtu.c" left="0" selected="1" top="48" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="30" y="47" useTextEdit="1" path="lib/inc/modbus_rtu.h" left="0" top="180" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="43" y="102" useTextEdit="1" path="lib/src/modbus_rtu.c" left="0" selected="1" top="72" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="30" y="47" useTextEdit="1" path="lib/inc/modbus_rtu.h" left="0" top="47" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/timer.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/crc16.h" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/src/crc16.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/src/timer.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="49" y="10" useTextEdit="1" path="lib/inc/usart.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="49" y="10" useTextEdit="1" path="lib/inc/usart.h" left="0" top="10" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="63" useTextEdit="1" path="lib/src/usart.c" left="0" top="63" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/unmanned-john-doe/git/embedded/STM32F407/lib/src" debugSearchPath="" autoConnectCapabilities="1343"/>
