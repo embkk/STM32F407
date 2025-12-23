@@ -4,6 +4,7 @@
 #include "buttons.h"
 #include "usart.h"
 #include "modbus_rtu.h"
+#include "adc.h"
 
 void RCC_Init(void);
 
@@ -39,7 +40,8 @@ int main(void) {
   
   TIM2_init();
   USART6_init();
-  
+  ADC1_Init();
+
   SysTick_Config(SYSTICK_TIMER_CONST);
 
   GPIO_LED_all_off();
@@ -49,7 +51,7 @@ int main(void) {
   while(1) {
     modbus_err = RequestParsingOperationExec();
     if(modbus_err!=0) {
-      LOG_MESSAGE("Modbus 0x%X", modbus_err);
+      LOG_MESSAGE("Modbus 0x%X adc %d", modbus_err, ADC1->DR * 1000);
     }
   }
 }

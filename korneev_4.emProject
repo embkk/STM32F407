@@ -77,6 +77,7 @@
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
       <folder Name="lib">
         <folder Name="inc">
+          <file file_name="lib/inc/adc.h" />
           <file file_name="lib/inc/buttons.h" />
           <file file_name="lib/inc/can.h" />
           <file file_name="lib/inc/crc16.h" />
@@ -95,6 +96,7 @@
           <file file_name="lib/inc/validation.h" />
         </folder>
         <folder Name="src">
+          <file file_name="lib/src/adc.c" />
           <file file_name="lib/src/buttons.c" />
           <file file_name="lib/src/can.c" />
           <file file_name="lib/src/crc16.c" />
