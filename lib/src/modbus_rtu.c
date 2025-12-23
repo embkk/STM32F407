@@ -76,6 +76,8 @@ uint8_t GetOperationCode(uint8_t rx_request[], uint8_t *op_code_out){
 
   if(( op_code_rx == READ_COILS ) ||
     ( op_code_rx == READ_DISCRETE_INPUTS ) ||
+    ( op_code_rx == READ_INPUT_REG ) ||
+    ( op_code_rx == READ_HOLDING_REG ) ||
     ( op_code_rx == WRITE_SINGLE_COIL ) ||
     ( op_code_rx == WRITE_MULTI_COILS ) ){
 
@@ -380,6 +382,10 @@ uint8_t ExecOperation(uint8_t op_code,
       err = Exec_READ_HOLDING_REG(start_addr_rx, quantity_rx, answer_array, &array_answer_len);
       break;
 
+    case(READ_INPUT_REG):
+      err = Exec_READ_INPUT_REG(start_addr_rx, quantity_rx, answer_array, &array_answer_len);
+      break;
+
     case(WRITE_SINGLE_COIL):
       err = Exec_WRITE_SINGLE_COIL(start_addr_rx, quantity_rx, answer_array, &array_answer_len);
       break;
@@ -387,6 +393,9 @@ uint8_t ExecOperation(uint8_t op_code,
     case(WRITE_MULTI_COILS):
       err = Exec_WRITE_MULTI_COILS(rx_request, req_len, answer_array, &array_answer_len);
       break;
+
+      default:
+        err = ERROR_EXECUTION;
 
   }
 
