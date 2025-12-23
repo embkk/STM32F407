@@ -27,14 +27,16 @@
 
 
 //-------- internal modbus reception state codes -------------
-#define MB_RX_IDLE				0x00
-#define MB_RX_DONE				0x01
+#define MB_RX_IDLE			0x00
+#define MB_RX_DONE			0x01
 #define MB_RX_STARTED			0x02
 
 
 //---- Modbus command codes ------------
-#define READ_COILS				0x01
-#define READ_DISCRETE_INPUTS	0x02
+#define READ_COILS			0x01
+#define READ_DISCRETE_INPUTS            0x02
+#define READ_HOLDING_REG                0x03
+#define READ_INPUT_REG                  0x04
 #define WRITE_SINGLE_COIL		0x05	
 #define WRITE_MULTI_COILS		0x0F
 
@@ -43,25 +45,26 @@
 #define ERROR_DATA_ADDR			0x02
 #define ERROR_DATA_VAL			0x03
 #define ERROR_EXECUTION			0x04	
-#define ERROR_05				0x05	// reserved
-#define ERROR_06				0x06	// reserved
+#define ERROR_05			0x05	// reserved
+#define ERROR_06			0x06	// reserved
 #define ERR_ANSWER_ADD			0x80	// add for answer command code
 
 //-------- Internal ERROR Codes --------------
-#define MODBUS_OK				0x00
-#define ERROR_CRC				0x0F	// ошибка по CRC16 
+#define MODBUS_OK			0x00
+#define ERROR_CRC			0x0F	// ошибка по CRC16 
 #define ERROR_PACK_LEN			0x1F	// неверная длина пакета
 #define MODBUS_RX_DONE			0x2F	// прием пакета завершен
 #define ERROR_DEV_ADDR			0x3F	// неверный адрес устройства в пакете
 
 //------- Modbus device address----------
-#define DEVICE_ADDR				0xAD
+#define DEVICE_ADDR			0xAD
 
 //------Modbus internal addresses--------
 // LEDS, BTNS
-#define COILS_NUM				3	// LEDS
+#define COILS_NUM			3	// LEDS
 #define DISCRETE_INPUTS_NUM		3	// BTNS
-
+#define HOLDING_REGS_NUM           	0	
+#define INPUT_REGS_NUM           	1	// ADC
 
 #define COIL_ON_CODE			0xFF00
 #define COIL_OFF_CODE			0x0000
@@ -189,10 +192,16 @@ uint8_t Exec_READ_DISCRETE_INPUTS( uint16_t start_addr_in,
 							uint8_t answer_tx[],
 							uint8_t *answer_len);
 
+uint8_t Exec_READ_HOLDING_REG( uint16_t start_addr_in, 
+							uint16_t quantity_in, 
+							uint8_t answer_tx[],
+							uint8_t *answer_len);
 
 
-
-
+uint8_t Exec_READ_INPUT_REG( uint16_t start_addr_in, 
+							uint16_t quantity_in, 
+							uint8_t answer_tx[],
+							uint8_t *answer_len);
 
 
 

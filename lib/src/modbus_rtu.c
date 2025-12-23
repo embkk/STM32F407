@@ -101,6 +101,18 @@ uint8_t CheckDataAddress(uint8_t op_code_in, uint8_t rx_request[]){
       }
       break;
 
+    case(READ_HOLDING_REG):
+      if((start_addr_rx >= 0) && (start_addr_rx < HOLDING_REGS_NUM)){
+        return MODBUS_OK;
+      }
+      break;
+
+    case(READ_INPUT_REG):
+      if((start_addr_rx >= 0) && (start_addr_rx < INPUT_REGS_NUM)){
+        return MODBUS_OK;
+      }
+      break;
+
 
     case(WRITE_SINGLE_COIL):
       if((start_addr_rx >= 0) && (start_addr_rx < COILS_NUM)){
@@ -143,6 +155,18 @@ uint8_t CheckDataValue(uint8_t op_code_in, uint8_t rx_request[]){
       }
       return ERROR_DATA_VAL;
 
+    case(READ_HOLDING_REG):
+      if((rx_data_range > 0) && (rx_data_range <= HOLDING_REGS_NUM)){
+        return MODBUS_OK;
+      }
+      return ERROR_DATA_VAL;
+
+    case(READ_INPUT_REG):
+      if((rx_data_range > 0) && (rx_data_range <= INPUT_REGS_NUM)){
+        return MODBUS_OK;
+      }
+      return ERROR_DATA_VAL;
+
     case(WRITE_SINGLE_COIL):
       if((wr_data_coil == COIL_OFF_CODE) || (wr_data_coil == COIL_ON_CODE) && (wr_addr_coil < COILS_NUM)){
         return MODBUS_OK;
@@ -173,6 +197,53 @@ uint8_t Exec_READ_COILS( uint16_t start_addr_in,
   answer_tx[1] = READ_COILS;
   answer_tx[2] = bytes_num;
   answer_tx[3] = Value_D0;
+  *answer_len = bytes_num + 3; // answer_len = all listed bytes, without CRC16 bytes
+
+  return MODBUS_OK;
+}
+
+
+uint8_t Exec_READ_HOLDING_REG( uint16_t start_addr_in, 
+							uint16_t quantity_in, 
+							uint8_t answer_tx[],
+							uint8_t *answer_len)
+{
+  uint8_t bytes_num = quantity_in*2;
+  uint16_t data[HOLDING_REGS_NUM] = {}; // this register is still empty
+
+  answer_tx[0] = DEVICE_ADDR;
+  answer_tx[1] = READ_HOLDING_REG;
+  answer_tx[2] = bytes_num;
+
+  for(int i =0; i<quantity_in; i++) {
+    answer_tx[3+i*2] = (data[start_addr_in+i] >> 8) & 0xFF;
+    answer_tx[3+i*2+1] = data[start_addr_in+i] & 0xFF;
+  }
+  
+  *answer_len = bytes_num + 3; // answer_len = all listed bytes, without CRC16 bytes
+
+  return MODBUS_OK;
+}
+
+
+
+uint8_t Exec_READ_INPUT_REG( uint16_t start_addr_in, 
+							uint16_t quantity_in, 
+							uint8_t answer_tx[],
+							uint8_t *answer_len)
+{
+  uint8_t bytes_num = quantity_in*2;
+  uint16_t data[INPUT_REGS_NUM] = { ADC1->DR };
+
+  answer_tx[0] = DEVICE_ADDR;
+  answer_tx[1] = READ_INPUT_REG;
+  answer_tx[2] = bytes_num;
+
+  for(int i =0; i<quantity_in; i++) {
+    answer_tx[3+i*2] = (data[start_addr_in+i] >> 8) & 0xFF;
+    answer_tx[3+i*2+1] = data[start_addr_in+i] & 0xFF;
+  }
+  
   *answer_len = bytes_num + 3; // answer_len = all listed bytes, without CRC16 bytes
 
   return MODBUS_OK;
@@ -304,7 +375,10 @@ uint8_t ExecOperation(uint8_t op_code,
     case(READ_DISCRETE_INPUTS):
       err = Exec_READ_DISCRETE_INPUTS(start_addr_rx, quantity_rx, answer_array, &array_answer_len);
       break;
-
+    
+    case(READ_HOLDING_REG):
+      err = Exec_READ_HOLDING_REG(start_addr_rx, quantity_rx, answer_array, &array_answer_len);
+      break;
 
     case(WRITE_SINGLE_COIL):
       err = Exec_WRITE_SINGLE_COIL(start_addr_rx, quantity_rx, answer_array, &array_answer_len);
