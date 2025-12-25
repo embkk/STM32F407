@@ -37,6 +37,8 @@ void LED_init(void) {
   }
 
 void Buttons_check(void) {
+  bound_timer++;
+  if(bound_timer<BTN_CHECK_MS) return;
   button(0, 10);
   button(1, 11);
   button(2, 12);

@@ -1,6 +1,8 @@
 #include <stm32f407xx.h>
 #include "log.h"
 #include "delay.h"
+#include "buttons.h"
+
 void RCC_Init(void);
 
 
@@ -18,5 +20,6 @@ int main(void) {
 
 void SysTick_Handler(void)
 {
+  Buttons_check();
   timer_counter();
 }

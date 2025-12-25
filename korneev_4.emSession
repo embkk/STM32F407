@@ -64,10 +64,10 @@
  </Watch1>
  <Watch2>
   <Watches active="1" update="Never">
-   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="47" filename="main.c"/>
-   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="44" filename="main.c"/>
-   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="76" filename="main.c"/>
-   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="75" filename="main.c"/>
+   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="14" filename="main.c"/>
+   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="12" filename="main.c"/>
+   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="36" filename="main.c"/>
+   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="35" filename="main.c"/>
   </Watches>
  </Watch2>
  <Watch3>
@@ -77,10 +77,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="main.c" left="0" top="61" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="13" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="16" y="199" useTextEdit="1" path="STM32F4xx/Device/Include/stm32f4xx.h" left="0" top="199" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="22" useTextEdit="1" path="lib/src/modbus_rtu.c" left="0" selected="1" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="19" useTextEdit="1" path="lib/inc/modbus_rtu.h" left="0" top="19" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="46" useTextEdit="1" path="gpio.h" left="0" selected="1" top="27" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
