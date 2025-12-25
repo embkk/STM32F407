@@ -4,7 +4,7 @@
 #include "log.h"
 #include "usart.h"
  
-#define SENSOR_CHECK_TIME_US  300000
+#define SENSOR_CHECK_TIME_US  250000
 
 // 1wire PE2
 #define release_1wire()     (GPIOE->BSRR  |= GPIO_BSRR_BS2)
@@ -314,7 +314,7 @@ int main(void) {
     //config
     scratch_mem[0] = 0x64;  //TH = 100
     scratch_mem[1] = 0x0A;  // TL = 10
-    scratch_mem[2] = 0x1F;  // 9bit
+    scratch_mem[2] = 0b00111111;  // 0b0RR11111
 
     Convert_Temperature();
 

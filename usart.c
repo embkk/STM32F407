@@ -27,20 +27,20 @@ void USART_init(void) {
   RCC -> AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
   RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 
-  /*
-    84Mhz / 115200 / 16 = 45,572916667
-    
-    M = 45 (0x2D)
-    F = 0,57 * 16 = 9.12 (0x9)
-  */
+  // BRR для 9600 @ 84MHz, OVER8
+  // USARTDIV = 84MHz / (8 * 9600) = 1093.75
+  // Mantissa = 1093 = 0x445
+  // Fraction = 0.75 * 8 = 6
+  USART1->BRR = (1093 << 4) | 6; // 0x4456
 
-  USART1-> BRR = 0x02D9; // бод
+
 
   //             interrupt          transmitter+   receiver+
   USART1-> CR1 = USART_CR1_RXNEIE | USART_CR1_TE | USART_CR1_RE;
-  
+  USART1->CR1 |= USART_CR1_OVER8; // включаем oversampling 8  
+
   //              word length       parity conntrol
-  USART1->CR1 &= ~(USART_CR1_M) | ~(USART_CR1_PCE);
+  USART1->CR1 &= ~(USART_CR1_M | USART_CR1_PCE);
   USART1->CR2 &= ~(USART_CR2_STOP); //1 stopbit
   NVIC_EnableIRQ(USART1_IRQn);
   
