@@ -4,14 +4,12 @@
 #include "log.h"
 #include "usart.h"
  
-void RCC_Init(void);
-
-#define SENSOR_CHECK_TIME_US  3000
+#define SENSOR_CHECK_TIME_US  300000
 
 // 1wire PE2
 #define release_1wire()     (GPIOE->BSRR  |= GPIO_BSRR_BS2)
 #define pull_low_1wire()    (GPIOE->BSRR  |= GPIO_BSRR_BR2)
-#define rx_mode_1wire()     (GPIOE->MODER &= ~GPIO_MODER_MODE2_0)
+#define rx_mode_1wire()     (GPIOE->MODER &= ~GPIO_MODER_MODE2_Msk)
 #define tx_mode_1wire()     (GPIOE->MODER |= GPIO_MODER_MODE2_0)
 #define check_1wire()       ((GPIOE->IDR & GPIO_IDR_ID2) != 0)
 
@@ -48,7 +46,9 @@ void RCC_Init(void);
 uint32_t us_count = 0;
 uint32_t delay_us_count = 0;
 
-void GPIO_Init() {
+void RCC_Init(void);
+
+void GPIO_Init(void) {
   RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
   
   GPIOE->PUPDR |= GPIO_PUPDR_PUPD10_0;
@@ -67,8 +67,13 @@ void GPIO_Init() {
 int t = 0;
 int __SEGGER_RTL_X_file_write(__SEGGER_RTL_FILE *__stream, const char *__s, unsigned __len) {
   t++;
-  LOG_MESSAGE("%0d %0ds: [%s]", t, __len, __s);
-  return 0;
+  char x[__len+1];
+  for(uint32_t i =0; i<__len; i++) {
+    x[i] = *(__s + i);
+  }
+  x[__len] = '\0';
+  LOG_MESSAGE("#%0d: [%s]", t, x);
+  
   for(; __len!=0; --__len) {
     USART1->DR = * __s++;
     while(RESET == READ_BIT(USART1->SR, USART_SR_TXE));
@@ -88,16 +93,16 @@ uint8_t Start_1wire(void) {
   Delay_us(500);
   release_1wire();
   rx_mode_1wire();
-  Delay_us(100);    // wait 100 us = 60 us pause + 40 us presense pulse
+  Delay_us(100); // wait 100 us = 60 us pause + 40 us presense pulse
   
   uint8_t state = check_1wire();
-  printf("1wire line state: %d\n", state);  // должно быть 0
+  //printf("1wire line state: %d\n", state);  // должно быть 0
 
   if(state) {
-    return 1;       // no presence pulse from 1wire device
+    return 1; // no presence pulse from 1wire device
   } else {
     Delay_us(200);
-    return 0;       // received presence pulse from 1wire
+    return 0; // received presence pulse from 1wire
   }
 }
 
@@ -278,7 +283,7 @@ int main(void) {
   LOG_INIT();
 
   SystemInit();
-  SysTick_Config(84000);
+  SysTick_Config(84);
   
   RCC_Init();
   USART_init();
