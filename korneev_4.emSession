@@ -28,6 +28,7 @@
  <Project>
   <ProjectSessionItem path="PCB Teach Sandbox"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;CMSIS Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;inc"/>
@@ -36,7 +37,7 @@
  </Project>
  <Register1>
   <RegisterWindow invisibleNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="korneev_4_Debug" decimalNodes="" octalNodes="" unsignedNodes=""/>
-  <RegisterWindow invisibleNodes="" visibleNodes="ADC1/SR;ADC1/CR1;ADC1/CR2;ADC1/SMPR1;ADC1/SMPR2;ADC1/JOFR1;ADC1/JOFR2;ADC1/JOFR3;ADC1/JOFR4;ADC1/HTR;ADC1/LTR;ADC1/SQR1;ADC1/SQR2;ADC1/SQR3;ADC1/JSQR;ADC1/JDR1;ADC1/JDR2;ADC1/JDR3;ADC1/JDR4;ADC1/DR;TIM2/CR1;TIM2/CR2;TIM2/SMCR;TIM2/DIER;TIM2/SR;TIM2/EGR;TIM2/CCMR1_Output;TIM2/CCMR1_Input;TIM2/CCMR2_Output;TIM2/CCMR2_Input;TIM2/CCER;TIM2/CNT;TIM2/PSC;TIM2/ARR;TIM2/CCR1;TIM2/CCR2;TIM2/CCR3;TIM2/CCR4;TIM2/DCR;TIM2/DMAR;TIM2/OR" binaryNodes="" asciiNodes="" openNodes="ADC1;ADC1/SR;ADC1/CR2;ADC1/JDR1;ADC1/DR;TIM2" name="PCB Teach Sandbox_Debug" decimalNodes="ADC1/JDR1;ADC1/JDR1/JDATA" octalNodes="" unsignedNodes=""/>
+  <RegisterWindow invisibleNodes="" visibleNodes="GPIOE/MODER;GPIOE/OTYPER;GPIOE/OSPEEDR;GPIOE/PUPDR;GPIOE/IDR;GPIOE/ODR;GPIOE/BSRR;GPIOE/LCKR;GPIOE/AFRL;GPIOE/AFRH" binaryNodes="" asciiNodes="" openNodes="GPIOE;GPIOE/PUPDR" name="PCB Teach Sandbox_Debug" decimalNodes="" octalNodes="" unsignedNodes=""/>
  </Register1>
  <Register2>
   <RegisterWindow invisibleNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="korneev_4_Debug" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -63,10 +64,10 @@
  </Watch1>
  <Watch2>
   <Watches active="1" update="Never">
-   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="49" filename="main.c"/>
-   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="46" filename="main.c"/>
-   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="73" filename="main.c"/>
-   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="72" filename="main.c"/>
+   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="47" filename="main.c"/>
+   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="44" filename="main.c"/>
+   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="76" filename="main.c"/>
+   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="75" filename="main.c"/>
   </Watches>
  </Watch2>
  <Watch3>
@@ -76,21 +77,10 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="67" y="53" useTextEdit="1" path="main.c" left="0" top="34" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="43" y="212" useTextEdit="1" path="STM32F4xx/Source/stm32f407xx_Vectors.s" left="0" top="212" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="1614" useTextEdit="1" path="STM32F4xx/Device/Include/stm32f407xx.h" left="0" top="1614" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="32" y="4" useTextEdit="1" path="lib/src/adc.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="5" useTextEdit="1" path="lib/inc/adc.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="26" useTextEdit="1" path="lib/src/log.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="3" y="1777" useTextEdit="1" path="CMSIS_5/CMSIS/Core/Include/core_cm4.h" left="0" top="1744" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/usart.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="28" useTextEdit="1" path="lib/src/usart.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="28" y="238" useTextEdit="1" path="lib/src/modbus_rtu.c" left="0" top="203" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="40" y="42" useTextEdit="1" path="lib/inc/modbus_rtu.h" left="0" selected="1" top="16" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/inc/crc16.h" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/src/crc16.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="20" useTextEdit="1" path="lib/src/timer.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="42" useTextEdit="1" path="lib/src/RCC_Init.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="61" useTextEdit="1" path="main.c" left="0" top="61" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="199" useTextEdit="1" path="STM32F4xx/Device/Include/stm32f4xx.h" left="0" top="199" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="36" y="22" useTextEdit="1" path="lib/src/modbus_rtu.c" left="0" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="8" y="19" useTextEdit="1" path="lib/inc/modbus_rtu.h" left="0" top="19" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
