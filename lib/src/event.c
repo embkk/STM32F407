@@ -4,14 +4,12 @@
 #include "log.h"
 
 void Event_Invoke(event_t e) {
-  //log_message("Event %p invoked", e);
   callback_t callback;
   for(int i=0; i<CALLBACK_COUNT_LIMIT; i++) {
     callback = e[i];
-    
     if(callback != NULL) {
       callback();
-      //log_message("Event %p invoked, callback %p", e, callback);
+      //LOG_MESSAGE("Event %p invoked, callback %p", e, callback);
     }
   }
 }
@@ -19,7 +17,7 @@ void Event_Invoke(event_t e) {
 void Event_AddListener(event_t e, callback_t callback) {
   for(int i=0; i<CALLBACK_COUNT_LIMIT; i++) {
     if(e[i]==NULL) {
-      //log_message("Event %p add listener %p", e, callback);
+      //LOG_MESSAGE("Event %p add listener %p", e, callback);
       e[i] = callback;
       return;
     }

@@ -9,9 +9,12 @@
 #define BTN_CHECK_MS 20
 
 extern uint8_t btn_state[3];
+extern uint8_t btn_state_old[3];
+extern event_t btn_pressed;
+extern event_t btn_released;
 
 void Buttons_init(void);
 void LED_init(void);
 void Buttons_check(void);
-
+void Buttons_print(void);
 #endif
