@@ -87,6 +87,7 @@
           <file file_name="lib/inc/fsm.h" />
           <file file_name="lib/inc/gpio.h" />
           <file file_name="lib/inc/i2c.h" />
+          <file file_name="lib/inc/lcd1602.h" />
           <file file_name="lib/inc/log.h" />
           <file file_name="lib/inc/modbus_rtu.h" />
           <file file_name="lib/inc/spi.h" />
@@ -105,6 +106,7 @@
           <file file_name="lib/src/fsm.c" />
           <file file_name="lib/src/gpio.c" />
           <file file_name="lib/src/i2c.c" />
+          <file file_name="lib/src/lcd1602.c" />
           <file file_name="lib/src/log.c" />
           <file file_name="lib/src/modbus_rtu.c" />
           <file file_name="lib/src/RCC_Init.c" />

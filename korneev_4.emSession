@@ -28,12 +28,12 @@
  <Project>
   <ProjectSessionItem path="PCB Teach Sandbox"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox"/>
-  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;CMSIS Files"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;System Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib"/>
-  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;inc"/>
   <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;src"/>
-  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;System Files"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;Source Files;lib;inc"/>
+  <ProjectSessionItem path="PCB Teach Sandbox;PCB Teach Sandbox;CMSIS Files"/>
  </Project>
  <Register1>
   <RegisterWindow invisibleNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/MSP;CPU/PSP;CPU/PRIMASK;CPU/BASEPRI;CPU/FAULTMASK;CPU/CONTROL;CPU/internal" binaryNodes="" asciiNodes="" openNodes="CPU - Current Context" name="korneev_4_Debug" decimalNodes="" octalNodes="" unsignedNodes=""/>
@@ -64,10 +64,10 @@
  </Watch1>
  <Watch2>
   <Watches active="1" update="Never">
-   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="14" filename="main.c"/>
-   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="12" filename="main.c"/>
-   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="36" filename="main.c"/>
-   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="35" filename="main.c"/>
+   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="16" filename="main.c"/>
+   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="14" filename="main.c"/>
+   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="39" filename="main.c"/>
+   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="38" filename="main.c"/>
   </Watches>
  </Watch2>
  <Watch3>
@@ -77,9 +77,11 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="13" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="199" useTextEdit="1" path="STM32F4xx/Device/Include/stm32f4xx.h" left="0" top="199" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="46" useTextEdit="1" path="gpio.h" left="0" selected="1" top="27" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="7" y="22" useTextEdit="1" path="main.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="37" y="220" useTextEdit="1" path="STM32F4xx/Device/Include/stm32f4xx.h" left="0" top="190" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="5" y="7" useTextEdit="1" path="lib/src/delay.c" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="6" y="32" useTextEdit="1" path="lib/src/buttons.c" left="0" selected="1" top="17" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="9" useTextEdit="1" path="lib/inc/buttons.h" left="0" top="0" codecName="Default"/>
  </Files>
  <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*.c" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
