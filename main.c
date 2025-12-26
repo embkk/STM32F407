@@ -27,7 +27,7 @@ uint8_t line2_text[8][LCD_CHAR_NUM_MAX] = {
                               "1 1 1",
                             };
 
-void on_btn_pressed(void) {
+/*void on_btn_pressed(void) {
   LOG_MESSAGE("Callback - button Pressed");
   Buttons_print();
 }
@@ -35,7 +35,46 @@ void on_btn_pressed(void) {
 void on_btn_released(void) {
   LOG_MESSAGE("Callback - button Released");
   Buttons_print();
+}*/
+
+void on_btn_event(void) {
+  uint8_t value = (btn_state[0] << 2) | (btn_state[1] << 1) | btn_state[2];
+
+  LCD1602_SetDDRAMAddress(0x00);
+  LCD1602_WriteString4bits(line1_text, LCD_CHAR_NUM_MAX);
+  LCD1602_SetDDRAMAddress(0x40);
+  LCD1602_WriteString4bits(line2_text[value], LCD_CHAR_NUM_MAX);
+  
+  LCD1602_CursorBlink_OFF();
+
+  if(btn_state[0]) {
+    LCD1602_CursorBlink_ON();
+    LCD1602_SetDDRAMAddress(0x4D);
+    GPIO_LED_on(LED01);
+  } else {
+    GPIO_LED_off(LED01);
+  }
+
+
+  if(btn_state[1]) {
+    LCD1602_CursorBlink_ON();
+    LCD1602_SetDDRAMAddress(0x47);
+    GPIO_LED_on(LED02);
+  } else {
+    GPIO_LED_off(LED02);
+  }
+
+  if(btn_state[2]) {
+    LCD1602_CursorBlink_ON();
+    LCD1602_SetDDRAMAddress(0x41);
+    GPIO_LED_on(LED03);
+  } else {
+    GPIO_LED_off(LED03);
+  }
+
 }
+
+
 
 int main(void) {
   LOG_INIT();
@@ -49,8 +88,8 @@ int main(void) {
 
   GPIO_LED_all_off();
 
-  Event_AddListener(btn_pressed, on_btn_pressed);
-  Event_AddListener(btn_released, on_btn_released);
+  Event_AddListener(btn_pressed, on_btn_event);
+  Event_AddListener(btn_released, on_btn_event);
 
   LOG_MESSAGE("Init completed");
   
