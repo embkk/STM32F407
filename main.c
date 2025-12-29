@@ -84,19 +84,18 @@ int main(void) {
   Buttons_init();
   LED_init();
 
-  SysTick_Config(SYSTICK_TIMER_CONST);
-
   GPIO_LED_all_off();
-
   Event_AddListener(btn_pressed, on_btn_event);
   Event_AddListener(btn_released, on_btn_event);
-
-  LOG_MESSAGE("Init completed");
   
-  //LCD1602_PinsInit4bits();
-  //LCD1602_ScreenInit4bits();
+  LOG_MESSAGE("Start systick...");
+  SysTick_Config(SYSTICK_TIMER_CONST);
+  LCD1602_PinsInit4bits();
+  LCD1602_ScreenInit4bits();
+  LOG_MESSAGE("Init completed");
 
   while(1) {
+      Buttons_check();
   }
 }
 
@@ -104,6 +103,6 @@ int main(void) {
 
 void SysTick_Handler(void)
 {
-  Buttons_check();
   timer_counter();
+  
 }
