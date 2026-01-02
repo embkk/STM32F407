@@ -63,11 +63,11 @@
   </Watches>
  </Watch1>
  <Watch2>
-  <Watches active="1" update="Twice a Second">
-   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="101" filename="main.c"/>
-   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="86" filename="main.c"/>
-   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="127" filename="main.c"/>
-   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="126" filename="main.c"/>
+  <Watches active="1" update="Never">
+   <Watchpoint expression="irq_count" name="irq_count" radix="10" linenumber="109" filename="main.c"/>
+   <Watchpoint expression="pa5_level" name="pa5_level" radix="10" linenumber="87" filename="main.c"/>
+   <Watchpoint expression="led_state" name="led_state" radix="10" linenumber="135" filename="main.c"/>
+   <Watchpoint expression="tick_count" name="tick_count" radix="10" linenumber="134" filename="main.c"/>
    <Watchpoint expression="us_delay" name="us_delay" radix="10" linenumber="34" filename="lib/src/delay.c"/>
    <Watchpoint expression="us" name="us" radix="10" linenumber="35" filename="lib/src/delay.c"/>
    <Watchpoint expression="us_counter" name="us_counter" radix="10" linenumber="9" filename="lib/src/delay.c"/>
@@ -76,6 +76,8 @@
    <Watchpoint expression="sec_delay" name="sec_delay" radix="10" linenumber="6" filename="lib/src/delay.c"/>
    <Watchpoint expression="ms_delay" name="ms_delay" radix="10" linenumber="5" filename="lib/src/delay.c"/>
    <Watchpoint expression="ms" name="ms" radix="10" linenumber="41" filename="lib/src/delay.c"/>
+   <Watchpoint expression="ms_cnt" name="ms_cnt" radix="10" linenumber="54" filename="main.c"/>
+   <Watchpoint expression="SYSTICK_TIMER_CONST" name="SYSTICK_TIMER_CONST" radix="10" linenumber="95" filename="main.c"/>
   </Watches>
  </Watch2>
  <Watch3>
@@ -85,19 +87,21 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="100" useTextEdit="1" path="main.c" left="0" selected="1" top="61" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="12" y="104" useTextEdit="1" path="main.c" left="0" selected="1" top="84" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="37" y="220" useTextEdit="1" path="STM32F4xx/Device/Include/stm32f4xx.h" left="0" top="220" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="5" y="7" useTextEdit="1" path="lib/src/delay.c" left="0" top="7" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="48" useTextEdit="1" path="lib/src/buttons.c" left="0" top="48" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="20" y="24" useTextEdit="1" path="lib/src/delay.c" left="0" top="34" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="16" y="50" useTextEdit="1" path="lib/src/buttons.c" left="0" top="14" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="5" y="18" useTextEdit="1" path="lib/inc/buttons.h" left="0" top="18" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="14" useTextEdit="1" path="lib/inc/delay.h" left="0" top="14" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="22" useTextEdit="1" path="lib/src/lcd1602.c" left="0" top="22" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="28" useTextEdit="1" path="lib/src/lcd1602.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="8" y="38" useTextEdit="1" path="lib/inc/lcd1602.h" left="0" top="38" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="32" y="5" useTextEdit="1" path="lib/inc/event.h" left="0" top="5" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/src/adc.c" left="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="20" y="8" useTextEdit="1" path="lib/src/event.c" left="0" top="8" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="10" y="20" useTextEdit="1" path="lib/inc/log.h" left="0" top="20" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="28" y="39" useTextEdit="1" path="SEGGER_THUMB_Startup.s" left="0" top="39" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="2" useTextEdit="1" path="main.h" left="0" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" path="lib/src/gpio.c" left="0" top="0" codecName="Default"/>
  </Files>
- <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/unmanned-john-doe/git/embedded/STM32F407/lib/src" debugSearchPath="" autoConnectCapabilities="1343"/>
+ <EMStudioWindow activeProject="PCB Teach Sandbox" fileDialogDefaultFilter="*" autoConnectTarget="GDB Server" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="/home/unmanned-john-doe/git/embedded/STM32F407" debugSearchPath="" autoConnectCapabilities="1343"/>
 </session>
