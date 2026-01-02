@@ -10,7 +10,7 @@
 #define RS_PORT		GPIOB
 #define RW_PORT		GPIOD
 #define E_PORT		GPIOE
-#define DB7_PORT	GPIOC
+#define  DB7_PORT	GPIOC
 #define DB6_PORT	GPIOE
 #define DB5_PORT	GPIOE
 #define DB4_PORT	GPIOE
@@ -128,7 +128,7 @@ void LCD1602_WriteChar4bits(uint8_t CharCode);
 	Ф-ия отображения строки или слова на индикаторе LCD1602
 	если строка короче 16-ти символов то переноса автоматического нет 
 ***/
-void LCD1602_WriteString4bits(uint8_t String[], uint8_t StringLen);
+void LCD1602_WriteString4bits(char String[], char StringLen);
 
 
 

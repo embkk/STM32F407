@@ -1,4 +1,3 @@
-#include <main.h>
 void ADC_Init(void)
 {
   RCC->APB2ENR|=RCC_APB2ENR_ADC1EN;
@@ -11,7 +10,9 @@ void ADC_Init(void)
   ADC1->CR1|=ADC_CR1_EOCIE; //разрешение прерывания по завершению преобразования
   ADC1->CR1|=ADC_CR1_AWDIE;
   ADC1->CR1|=ADC_CR1_AWDEN;
-  //NVIC_EnableIRQ(ADC_IRQn); // разрешение прерывания в NVIC
+  NVIC_EnableIRQ(ADC_IRQn); // разрешение прерывания в NVIC
+  ADC1->HTR = (8*4096)/10; //верхний порог 80 процентов;
+  ADC1->LTR = (1*4096)/10; //нижний порог 10 процентов
   ADC1->CR2|=ADC_CR2_CONT|ADC_CR2_ADON;   //непрерывный режим/включение ацп 
   
   ADC1->CR2|=ADC_CR2_SWSTART;  //запуск измерения

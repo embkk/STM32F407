@@ -1,49 +1,45 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-#include "validation.h"
-#include "stm32f407xx.h"
+#include "stm32f4xx.h"
 
-#define LED01 13
-#define LED02 14
-#define LED03 15
+#define LED1_PORT    GPIOE
+#define LED2_PORT    GPIOE
+#define LED3_PORT    GPIOE
 
-#define LED(n) n == 0 ? LED01 : n==1 ? LED02 : LED03
+#define LED1_PIN_NUM    13
+#define LED2_PIN_NUM    14
+#define LED3_PIN_NUM    15
 
-// get pin status (only Input and Output mode supported)
-// asserts not supported cause usage "if(GPIO_pin_io_status)"
-#define GPIO_pin_io_status(mode, port, pin) \
-(GPIO##port->mode##DR & GPIO_##mode##DR_##mode##D##pin)
+// Макросы для включения светодиодов (Active Low - включаются нулем)
+// Сдвиг на 16 бит в регистре BSRR сбрасывает пин в 0
+#define LED1_ON()       (LED1_PORT -> BSRR |= 1 << (LED1_PIN_NUM + 16))
+#define LED2_ON()       (LED2_PORT -> BSRR |= 1 << (LED2_PIN_NUM + 16))
+#define LED3_ON()       (LED3_PORT -> BSRR |= 1 << (LED3_PIN_NUM + 16))
 
-// toggle pin
-#define GPIO_pin_toggle(mode, port, pin) \
-_Static_assert(IS_VALID_PORT(port), "Invalid port: "#port);\
-_Static_assert(IS_VALID_PIN(pin), "Invalid pin: "#pin);\
-GPIO##port->BSRR |= (GPIO##port->mode##DR & GPIO_##mode##DR_##mode##D##pin) ? GPIO_BSRR_BR##pin : GPIO_BSRR_BS##pin
+// Макросы для выключения светодиодов
+// Запись в младшие 16 бит BSRR устанавливает пин в 1
+#define LED1_OFF()      (LED1_PORT -> BSRR |= 1 << LED1_PIN_NUM)
+#define LED2_OFF()      (LED2_PORT -> BSRR |= 1 << LED2_PIN_NUM)
+#define LED3_OFF()      (LED3_PORT -> BSRR |= 1 << LED3_PIN_NUM)
 
-#define GPIO_pin_cond(port, pin, cond) \
-if(cond) { GPIO_pin_set(port, pin); } \
-else { GPIO_pin_reset(port, pin); }
+// Макросы для переключения состояния (Toggle) через регистр ODR
+#define LED1_TOGGLE()   (LED1_PORT -> ODR ^= (1 << LED1_PIN_NUM))
+#define LED2_TOGGLE()   (LED2_PORT -> ODR ^= (1 << LED2_PIN_NUM))
+#define LED3_TOGGLE()   (LED3_PORT -> ODR ^= (1 << LED3_PIN_NUM))
 
-// set pin to BS
-#define GPIO_pin_set(port, pin) \
-_Static_assert(IS_VALID_PORT(port), "Invalid port: "#port);\
-_Static_assert(IS_VALID_PIN(pin), "Invalid pin: "#pin);\
-GPIO##port->BSRR |= GPIO_BSRR_BS##pin
+//----------- buttons add -----------
 
-// set pin to BR
-#define GPIO_pin_reset(port, pin) \
-_Static_assert(IS_VALID_PORT(port), "Invalid port: "#port);\
-_Static_assert(IS_VALID_PIN(pin), "Invalid pin: "#pin);\
-GPIO##port->BSRR |= GPIO_BSRR_BR##pin
+#define BTN_PORT        GPIOE
+#define BTN1_PIN_NUM    10
+#define BTN2_PIN_NUM    11
+#define BTN3_PIN_NUM    12
 
-// LED toggle sugar
-#define GPIO_LED_toggle(led) GPIO_pin_toggle(O, E, led)
-#define GPIO_LED_off(led) GPIO_pin_set(E, led)
-#define GPIO_LED_on(led) GPIO_pin_reset(E, led)
+#define BTN_CHECK_MS    10 
+#define BTN_PRESS_CNT   4
 
-#define GPIO_LED_all_on() GPIO_LED_on(LED01); GPIO_LED_on(LED02); GPIO_LED_on(LED03)
-#define GPIO_LED_all_off() GPIO_LED_off(LED01); GPIO_LED_off(LED02); GPIO_LED_off(LED03)
+void GPIO_Init(void);
+
+void BTN_Check(uint16_t *ms_count, uint8_t *BTN_state);
 
 #endif
-

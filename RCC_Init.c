@@ -4,8 +4,8 @@ void RCC_Init(void)
 {
 RCC->CR |= RCC_CR_HSEON;
 while ( (RCC->CR & RCC_CR_HSERDY) == 0 ) {}
-RCC->CR &= ~(RCC_CR_PLLON);                 // Отключение PLL перед настройкой тактирования
-RCC->PLLCFGR |= RCC_PLLCFGR_PLLSRC_HSE;     // Выбор HSE в качестве источника тактирования
+RCC->CR &= ~(RCC_CR_PLLON);				// Отключение PLL перед настройкой тактирования
+RCC->PLLCFGR |= RCC_PLLCFGR_PLLSRC_HSE; // Выбор HSE в качестве источника тактирования
 
 /* тут настройка предделителей и умножителей для PLL с целью получить требуемую частоту 84MHz
  и настройка частот шин подключения периферии:

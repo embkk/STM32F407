@@ -1,116 +1,71 @@
-#include <stm32f407xx.h>
-#include "log.h"
-#include "gpio.h"
-#include "delay.h"
-#include "buttons.h"
-#include "lcd1602.h"
+#include "main.h"
+#include <stdio.h>
+#include <string.h>
 
-void RCC_Init(void);
-
-// BTN3   BTN2   BTN1   
-//  0      1       0
-
-//  0 или 1 состояние кнопок нажата
-//  включение курсора
-//  позиционирование на кнопке
-//  включение режима мигания курсора
-
-uint8_t line1_text[LCD_CHAR_NUM_MAX] = "BTN3 BTN2 BTN1  ";
-uint8_t line2_text[8][LCD_CHAR_NUM_MAX] = {
-                              "0 0 0           ",
-                              "0 0 1           ",
-                              "0 1 0           ",
-                              "0 1 1           ",
-                              "1 0 0           ",
-                              "1 0 1           ",
-                              "1 1 0           ",
-                              "1 1 1           ",
-                            };
-
-/*void on_btn_pressed(void) {
-  LOG_MESSAGE("Callback - button Pressed");
-  Buttons_print();
+uint16_t us_count=0;
+uint16_t ms_cnt=0;
+void SysTick_Handler(void){
+    timer_counter();
 }
-
-void on_btn_released(void) {
-  LOG_MESSAGE("Callback - button Released");
-  Buttons_print();
-}*/
-
-void on_btn_event(void) {
-  uint8_t value = (btn_state[0] << 2) | (btn_state[1] << 1) | btn_state[2];
-
-  LCD1602_SetDDRAMAddress(0x00);
-  LCD1602_WriteString4bits(line1_text, LCD_CHAR_NUM_MAX);
-  LCD1602_SetDDRAMAddress(0x40);
-  LCD1602_WriteString4bits(line2_text[value], LCD_CHAR_NUM_MAX);
-  
-  LCD1602_CursorBlink_OFF();
-
-  if(btn_state[0]) {
-    LCD1602_CursorBlink_ON();
-    LCD1602_SetDDRAMAddress(0x4D);
-    GPIO_LED_on(LED01);
-  } else {
-    GPIO_LED_off(LED01);
-  }
-
-
-  if(btn_state[1]) {
-    LCD1602_CursorBlink_ON();
-    LCD1602_SetDDRAMAddress(0x47);
-    GPIO_LED_on(LED02);
-  } else {
-    GPIO_LED_off(LED02);
-  }
-
-  if(btn_state[2]) {
-    LCD1602_CursorBlink_ON();
-    LCD1602_SetDDRAMAddress(0x41);
-    GPIO_LED_on(LED03);
-  } else {
-    GPIO_LED_off(LED03);
-  }
-
-}
-
-
-
 int main(void) {
-  LOG_INIT();
-  
-  SystemInit();
+  char ADC_Text[14]    =    "ADC mV = ";
+  char DS18B20_Text[12] = {0};
+  uint16_t adc_value;
+  uint8_t error_1wire = 0;   // 0 = OK, 1 = ERROR;
+  uint8_t family_byte = 0; 
+  uint8_t ser_number[6] = {};
+  uint8_t crc_rx = 0;
+  uint8_t scratch_mem[9] = {};
+  uint16_t temper;
+  uint16_t temper_fract;
+  float temper_float;
   RCC_Init();
-  Buttons_init();
-  LED_init();
+  ADC_Init();
+  TIM10_Init();
+  SysTick_Config(8400);
 
-  GPIO_LED_all_off();
-  Event_AddListener(btn_pressed, on_btn_event);
-  Event_AddListener(btn_released, on_btn_event);
-  
-  LOG_MESSAGE("Start systick...");
-  SysTick_Config(SYSTICK_TIMER_CONST);
+  GPIO_Init();
   LCD1602_PinsInit4bits();
   LCD1602_ScreenInit4bits();
-  LOG_MESSAGE("Init completed");
+ 
+  LED1_OFF();
+  LED2_OFF();
+  LED3_OFF();
+    while (1){
+      adc_value = (3300*ADC1->DR)/(int)4096;
+      sprintf(ADC_Text, "ADC mV = %d   ", adc_value);     
+      LCD1602_SetDDRAMAddress(0x00);
+      LCD1602_WriteString4bits(ADC_Text, sizeof(ADC_Text));
+   //confg settings for DS18B20
+      scratch_mem[0]= 0x64;         //TH = 0x64 = 100
+      scratch_mem[1]= 0x0A;         //TL = 0x0A = 10 
+      scratch_mem[2]= 0x3F;         // config = 0x3F;10-bit temperature format
+      WriteScratch(scratch_mem);
+      Convert_Temperature(); // convert temperature (Инициируем преобразование температуры)
 
-  while(1) {
-      GPIO_LED_all_off();
-      Delay_sec(1);
-      on_btn_event();
-      LOG_MESSAGE("Writen");
-      Delay_sec(1);
-      GPIO_LED_all_on();
-      Delay_sec(1);
-      //
-      //Buttons_check();
-  }
-}
+// Ожидаем завершения преобразования (время SENSOR_CHECK_TIME_US)
+      delay_us_tim10(SENSOR_CHECK_TIME_US); 
+      error_1wire = ReadScratchpad(scratch_mem); // Считываем данные из scratchpad
+      if(error_1wire == OK_1WIRE){              // Если чтение scratchpad успешно
+  // Складываем два байта температуры из scratch_mem[1] (MSB) и scratch_mem[0] (LSB)
+        temper = ((scratch_mem[1] << 8)) + scratch_mem[0];
+        if(temper < 0x0800){ // если положительные температуры (проверяем знаковый бит)
+        temper_fract = (((temper & 0x000F)*100) >> 4); // Вычисляем дробную часть
+        temper_float = ((float)temper / 16);           // Вычисляем температуру в float
+        temper_float = (float)temper / 16;
+        sprintf(DS18B20_Text, "temp = %d.%d", (temper >> 4), temper_fract);
+        LCD1602_SetDDRAMAddress(0x40);
+        LCD1602_WriteString4bits(DS18B20_Text, sizeof(DS18B20_Text));
+                         }
+      else{ // если отрицательные температуры
+        temper = (0xFFFF - temper) + 1;                  // Инвертируем и добавляем 1 (двоичное дополнение)
+        temper_fract = (((temper & 0x000F)*100) >> 4); // Вычисляем дробную часть
+    // temper_float = ((float)temper / 16);        // Эта строка отсутствует на фото, но логична
+        temper_float = (float)temper / 16;
+          }
+        }
+      } 
+    } 
 
 
-
-void SysTick_Handler(void)
-{
-  timer_counter();
-  
-}
+/*************************** End of file ****************************/
