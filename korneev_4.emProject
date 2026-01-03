@@ -79,6 +79,7 @@
         <folder Name="inc">
           <file file_name="lib/inc/delay.h" />
           <file file_name="lib/inc/gpio.h" />
+          <file file_name="lib/inc/log.h" />
           <file file_name="lib/inc/usart.h" />
         </folder>
         <folder Name="SD">
@@ -88,6 +89,7 @@
         <folder Name="src">
           <file file_name="lib/src/delay.c" />
           <file file_name="lib/src/gpio.c" />
+          <file file_name="lib/src/log.c" />
           <file file_name="lib/src/RCC_init.c" />
           <file file_name="lib/src/usart.c" />
         </folder>

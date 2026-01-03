@@ -1,5 +1,5 @@
 #include "main.h"
-
+  
 
 #define BUFFER_SIZE_BYTES   (uint16_t)2048
 #define START_SECTOR_NUM    (uint32_t)4    //0-3 sectors for FAT markup
@@ -55,10 +55,13 @@ int main(void) {
           printf("----- SD-card Block %d bytes reading! -----\n", BUFFER_SIZE_BYTES);
 
           // чтение данных. Начиная с сектора № 65544, чтение 4-х секторов подряд
-          SD_ErrorState = SD_ReadMultiBlocksBytes(65544, readData_8, SD_BLOCK_SIZE_BYTES, 4);
+          SD_ErrorState = SD_ReadMultiBlocksBytes(18752, readData_8, SD_BLOCK_SIZE_BYTES, 4);
 
           // отправка считанного текста в USART1
-          if(SD_ErrorState == SD_OK) usart1_send(readData_8, BUFFER_SIZE_BYTES);
+          if(SD_ErrorState == SD_OK) {
+            //LOG_MESSAGE((char*)readData_8, BUFFER_SIZE_BYTES);
+            usart1_send(readData_8, BUFFER_SIZE_BYTES);
+          }
           else printf("----- SD-card reading error! -----\n");
       }
       else{

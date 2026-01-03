@@ -207,7 +207,7 @@ int __SEGGER_RTL_X_file_write(__SEGGER_RTL_FILE *__stream, const char *__s, unsi
     x[i] = *(__s + i);
   }
   x[__len] = '\0';
-  LOG_MESSAGE("#%0d: [%s]", t, x);
+  LOG_MESSAGE("#%0d: [%s]", x);
 
   // Send string over USART1 in pending mode 
   for (; __len != 0; --__len) {

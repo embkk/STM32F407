@@ -3,5 +3,6 @@
 #include "usart.h"
 #include "gpio.h"
 #include <stdio.h>
+#include "log.h"
 
 void RCC_Init(void);
