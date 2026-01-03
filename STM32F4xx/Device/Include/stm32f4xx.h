@@ -50,6 +50,24 @@
   */
 #if !defined  (STM32F4)
 #define STM32F4
+
+#if !defined  (HSE_VALUE) 
+  #define HSE_VALUE    ((uint32_t)25000000) /*!< Value of the External oscillator in Hz */
+#endif /* HSE_VALUE */
+
+/**
+ * @brief In the following line adjust the External High Speed oscillator (HSE) Startup 
+   Timeout value 
+   */
+#if !defined  (HSE_STARTUP_TIMEOUT) 
+  #define HSE_STARTUP_TIMEOUT    ((uint16_t)0x0500)   /*!< Time out for HSE start up */
+#endif /* HSE_STARTUP_TIMEOUT */   
+
+#if !defined  (HSI_VALUE)   
+  #define HSI_VALUE    ((uint32_t)16000000) /*!< Value of the Internal oscillator in Hz*/
+#endif /* HSI_VALUE */   
+
+
 #endif /* STM32F4 */
 
 /* Uncomment the line below according to the target STM32 device used in your
@@ -295,6 +313,8 @@ typedef enum
 /**
   * @}
   */
+
+#define assert_param(expr) ((void)0)
 
 /**
   * @}
