@@ -2,6 +2,10 @@
   
 
 #define MAX_BYTES_TO_READ (uint16_t)2048
+#define CMD_START "_start_"
+#define CMD_STOP "_stop_"
+
+uint8_t active_state = 0;
 
 FATFS fs;
 FRESULT res;
