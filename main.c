@@ -24,7 +24,7 @@ FRESULT SD_CardMount(void){
 }
 
 FRESULT SD_CardFileRead(void){
-    const char file_name[12] = "fstest00.txt";
+    const char file_name[12] = "test.txt";
     uint8_t readed_data[MAX_BYTES_TO_READ];
     unsigned int BytesReaded = 0;
 
@@ -99,7 +99,6 @@ FRESULT SD_CardFileRead(void){
     return res;
 }
 
-
 FRESULT SD_CardCreateFile(void) {
     const char fl_name[12] = "crt0.txt";
     uint16_t WritedBytes = 0;
@@ -161,6 +160,25 @@ int main(void) {
 
       // настройка режима работы POLLING MODE - режим опроса карты
       SD_SetDeviceMode(SD_POLLING_MODE);
+
+      res = SD_CardMount();
+
+      // чтение файла с карты памяти, если она инициализировалась верно.
+      if (res == FR_OK) {
+          res = SD_CardFileRead();
+      }
+      else {
+          printf("- SD-card mounting failed... \n");
+      }
+
+      // создание нового файла на карте и запись в него тестовой строки
+      if (res == FR_OK) {
+          res = SD_CardCreateFile();
+      }
+      else {
+          printf("--- ERROR reading file on SD-card \n");
+          printf("--- New file was NOT CREATED on SD-card \n");
+      }
 
   } else {
     printf("----- SD-card not found! -----\n");
