@@ -222,6 +222,7 @@
         </folder>
       </folder>
       <file file_name="main.c" />
+      <file file_name="main.h" />
     </folder>
     <folder Name="System Files">
       <file file_name="SEGGER_THUMB_Startup.s" />
