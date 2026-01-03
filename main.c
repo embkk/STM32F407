@@ -32,7 +32,8 @@ int main(void) {
   LED2_OFF();
   LED3_OFF();
     while (1){
-      adc_value = (3300*ADC1->DR)/(int)4096;
+      adc_value = 4000;
+      //adc_value = (3300*ADC1->DR)/(int)4096;
       sprintf(ADC_Text, "ADC mV = %d   ", adc_value);     
       LCD1602_SetDDRAMAddress(0x00);
       LCD1602_WriteString4bits(ADC_Text, sizeof(ADC_Text));
