@@ -3,22 +3,22 @@
 #define CMD_START "_start_"
 #define CMD_STOP "_stop_"
 
-#define OUTPUT_BUFFER_DELAY 8400000
+#define OUTPUT_BUFFER_DELAY 84000
+#define INPUT_BUFFER_DELAY 8400
 
 SD_Error SD_ErrorState = SD_OK;
 
 uint8_t state_started = 0;
-uint8_t state_cmd = 0;
+
 char input_buffer[MAX_BYTES_TO_READ] ={};
-uint8_t input_buffer_len;
 char output_buffer[MAX_BYTES_TO_READ] ={};
+
+uint8_t input_buffer_len;
 uint8_t output_buffer_len;
 
+uint32_t output_counter;
+uint32_t input_counter;
 
-uint32_t clock_count;
-
-void SD_Stop(void) {
-}
 void SD_Start(void) {
  // Инициализация карты
   SD_ErrorState = SD_Init();
@@ -83,7 +83,7 @@ uint8_t parse_buffer_char(char c) {
     cmd_status = check_cmd(CMD_STOP, sizeof(CMD_STOP));
     if(cmd_status == 0) {
       printf("CMD: _stop_\n");
-      SD_Stop();
+      f_close(&file);
       state_started = 0;
     }
   }
@@ -96,6 +96,8 @@ void USART1_IRQHandler(void) {
   if (USART1->SR & USART_SR_RXNE) {
     input_buffer[input_buffer_len] = USART1->DR;
     input_buffer_len++;
+    output_counter = 0;
+    input_counter = 0;
   }
   NVIC_ClearPendingIRQ(USART1_IRQn);
 }
@@ -115,7 +117,9 @@ int main(void) {
   uint8_t parse_result = 3; // unknown
   
   while(1) {
-    clock_count++;
+    __disable_irq();
+    output_counter++;
+    input_counter++;
 
     //parse input buffer
     for(int i=0; i<input_buffer_len;i++) {
@@ -126,34 +130,38 @@ int main(void) {
         input_buffer_len = 0;
       }
     }
+    if(input_counter>INPUT_BUFFER_DELAY) {
 
-    // clear garbage input
-    if(!state_started && parse_result==1) input_buffer_len = 0;
+      // clear garbage input
+      if(!state_started && parse_result==1) input_buffer_len = 0;
 
-    // send input buffer
-    if(state_started && parse_result==1 && input_buffer_len>0) {
+      // pack input buffer
+      if(state_started && parse_result==1 && input_buffer_len>0) {
       
-      for(int i=0;i<input_buffer_len;i++) {
-        output_buffer[output_buffer_len] = input_buffer[i];
-        output_buffer_len++;
-        input_buffer_len--;
+        for(int i=0;i<input_buffer_len;i++) {
+          output_buffer[output_buffer_len] = input_buffer[i];
+          output_buffer_len++;
+        }
+
+        /*printf("Drop input buffer [%d]: ", input_buffer_len);
+        for(int i=0;i<input_buffer_len;i++) printf("%c", input_buffer[i]);
+        printf("\n");*/
+
+        input_buffer_len = 0;
+        input_counter = 0;
       }
-
-      /*printf("Drop input buffer [%d]: ", input_buffer_len);
-      for(int i=0;i<input_buffer_len;i++) printf("%c", input_buffer[i]);
-      printf("\n");
-
-      input_buffer_len = 0;*/
     }
+    __enable_irq();
     
-    if(clock_count>OUTPUT_BUFFER_DELAY && output_buffer_len>0) {
+    if(output_counter>OUTPUT_BUFFER_DELAY && output_buffer_len>0) {
       res = SD_CardWriteStream(output_buffer, output_buffer_len);
-      
-      output_buffer_len = 0;
 
-      /*printf("Write output buffer [%d]: ", output_buffer_len);
+      /*printf("Writen output buffer [%d]: ", output_buffer_len);
       for(int i=0;i<output_buffer_len;i++) printf("%c", output_buffer[i]);
       printf("\n");*/
+
+      output_buffer_len = 0;
+      output_counter = 0;
     }
   }
 }

@@ -7,7 +7,7 @@
 #include "sdcard.h"
 
 #define MAX_BYTES_TO_READ (uint16_t)2048
-#define FILENAME "scream.txt"
+#define FILENAME "myfile.txt"
 
 extern FATFS fs;
 extern FRESULT res;

@@ -136,40 +136,45 @@ FRESULT SD_CardCreateFile(void) {
 }
 
 FRESULT SD_CardWriteStream(const char* stream, const uint32_t len) {
-    printf("Write %d symbols..", len);
+    printf("Write %d symbols..", (int)len);
     const char fl_name[12] = FILENAME;
-    uint16_t WritedBytes = 0;
+    UINT WritedBytes = 0;
 
-    res = f_open(&file, fl_name, FA_OPEN_APPEND | FA_READ | FA_WRITE);
+    res = f_open(&file, fl_name, FA_OPEN_APPEND | FA_WRITE);
 
     if (res != FR_OK) {
         printf("> Creating file %s FAILED! Error code = %d \n", fl_name, res);
     } else {
         printf("> file stream opened %s\n", fl_name);
 
-        if(len>0) {
+        if(len > 0) {
+            uint8_t *file_text = malloc(len);
+            
+            if (file_text != NULL) {
+                memcpy(file_text, stream, len);
 
-          // Резервируем память для строки file_text
-          uint8_t *file_text = malloc(len * sizeof(uint8_t));
-          // Записываем тестовую строку в file_text
-          sprintf((char*)file_text, stream, len);
+                res = f_write(&file, file_text, (UINT)len, &WritedBytes);
 
-          // Записываем строку file_text в файл
-          res = f_write(&file, file_text, strlen((char*)file_text), (UINT*)&WritedBytes);
-
-          if (res != FR_OK) {
-              printf(">> Writing into file %s FAILED! Error code = %d \n", fl_name, res);
-          } else {
-              printf(">> Writing %d into file %s successfully \n", len, fl_name);
-          }
-          free(file_text); // Рекомендуется добавить освобождение памяти
+                if (res != FR_OK) {
+                    printf(">> Writing into file %s FAILED! Error code = %d \n", fl_name, res);
+                } else {
+                    // Твой обновленный лог с выводом содержимого
+                    printf(">> Writing %d into file %s successfully. Data: [", (int)WritedBytes, fl_name);
+                    for (uint32_t i = 0; i < WritedBytes; i++) {
+                        // Выводим как символы. Если там бинарщина, можно заменить на %02X
+                        printf("%c", file_text[i]); 
+                    }
+                    printf("]\n");
+                }
+                
+                free(file_text); 
+            } else {
+                printf(">> MALLOC FAILED!\n");
+            }
         }
 
         f_sync(&file);
-        f_close(&file);
     }
 
     return res;
 }
-
-

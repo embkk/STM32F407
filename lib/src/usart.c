@@ -206,12 +206,12 @@ uint8_t usart6_receive_byte(uint8_t *rx_byte){
 //retarget the C library printf function to the USART1 
 int __SEGGER_RTL_X_file_write(__SEGGER_RTL_FILE *__stream, const char *__s, unsigned __len) {
   
-  char x[__len+1];
+  /*char x[__len+1];
   for(uint32_t i =0; i<__len; i++) {
     x[i] = *(__s + i);
   }
   x[__len] = '\0';
-  LOG_MESSAGE("#%0d: [%s]", x);
+  LOG_MESSAGE("#%0d: [%s]", x);*/
 
   // Send string over USART1 in pending mode 
   for (; __len != 0; --__len) {
