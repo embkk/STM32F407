@@ -1,0 +1,10 @@
+Cuted off peripherals:
+	GPIOJ
+	GPIOK
+	
+	SPI4
+	SPI5
+	SPI6
+
+	USART6 
+	USART7
