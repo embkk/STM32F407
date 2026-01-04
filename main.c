@@ -70,7 +70,6 @@ uint8_t check_cmd(const char* cmd, uint8_t cmd_len ) {
 }
 
 uint8_t parse_buffer_char(char c) {
-  //LOG_MESSAGE("[%d] Input buffer %s", buffer_len, input_buffer);
   uint8_t cmd_status = 1; // Not a command
   if(!state_started) {
     cmd_status = check_cmd(CMD_START, sizeof(CMD_START));
@@ -88,7 +87,6 @@ uint8_t parse_buffer_char(char c) {
     }
   }
 
-  //LOG_MESSAGE("%s, check_cmd = %d, state_cmd = %d", state_started ? "Started" : "Not started", cmd_status, state_cmd);
   return cmd_status;
 }
 
@@ -143,22 +141,15 @@ int main(void) {
           output_buffer_len++;
         }
 
-        /*printf("Drop input buffer [%d]: ", input_buffer_len);
-        for(int i=0;i<input_buffer_len;i++) printf("%c", input_buffer[i]);
-        printf("\n");*/
-
         input_buffer_len = 0;
         input_counter = 0;
       }
     }
     __enable_irq();
     
+    // write output buffer to file
     if(output_counter>OUTPUT_BUFFER_DELAY && output_buffer_len>0) {
       res = SD_CardWriteStream(output_buffer, output_buffer_len);
-
-      /*printf("Writen output buffer [%d]: ", output_buffer_len);
-      for(int i=0;i<output_buffer_len;i++) printf("%c", output_buffer[i]);
-      printf("\n");*/
 
       output_buffer_len = 0;
       output_counter = 0;
