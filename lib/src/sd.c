@@ -25,7 +25,7 @@ FRESULT SD_CardMount(void){
 }
 
 FRESULT SD_CardFileRead(void){
-    const char file_name[12] = "test.txt";
+    const char file_name[12] = FILENAME;
     uint8_t readed_data[MAX_BYTES_TO_READ];
     unsigned int BytesReaded = 0;
 
@@ -86,6 +86,7 @@ FRESULT SD_CardFileRead(void){
           if (res == FR_OK) {
               printf("\n\n+++ Long file was readed successfully!\n");
               printf("+++ was readed %d bytes successfully!\n", (uint16_t)file_info.fsize);
+              f_sync(&file);
               f_close(&file);
           }
           else {
@@ -133,4 +134,42 @@ FRESULT SD_CardCreateFile(void) {
 
     return res;
 }
+
+FRESULT SD_CardWriteStream(const char* stream, const uint32_t len) {
+    printf("Write %d symbols..", len);
+    const char fl_name[12] = FILENAME;
+    uint16_t WritedBytes = 0;
+
+    res = f_open(&file, fl_name, FA_OPEN_APPEND | FA_READ | FA_WRITE);
+
+    if (res != FR_OK) {
+        printf("> Creating file %s FAILED! Error code = %d \n", fl_name, res);
+    } else {
+        printf("> file stream opened %s\n", fl_name);
+
+        if(len>0) {
+
+          // Резервируем память для строки file_text
+          uint8_t *file_text = malloc(len * sizeof(uint8_t));
+          // Записываем тестовую строку в file_text
+          sprintf((char*)file_text, stream, len);
+
+          // Записываем строку file_text в файл
+          res = f_write(&file, file_text, strlen((char*)file_text), (UINT*)&WritedBytes);
+
+          if (res != FR_OK) {
+              printf(">> Writing into file %s FAILED! Error code = %d \n", fl_name, res);
+          } else {
+              printf(">> Writing %d into file %s successfully \n", len, fl_name);
+          }
+          free(file_text); // Рекомендуется добавить освобождение памяти
+        }
+
+        f_sync(&file);
+        f_close(&file);
+    }
+
+    return res;
+}
+
 
