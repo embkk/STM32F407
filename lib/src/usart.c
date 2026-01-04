@@ -31,8 +31,12 @@ void USART1_Init(void){
 	//USART1 -> BRR |= 0x16C;	// 115200 APB2 freq = 42 MHz
 	
 	USART1 -> CR1 |= USART_CR1_TE | USART_CR1_RE;					// Включение приемника и передатчика
-	USART1 -> CR1 &= ~(USART_CR1_M) | ~(USART_CR1_PCE);              // 8-бит, без контроля четности
+	USART1 -> CR1 &= ~(USART_CR1_M | USART_CR1_PCE);              // 8-бит, без контроля четности
 	USART1 -> CR2 &= ~(USART_CR2_STOP);                              // 1 стоповый бит
+
+        USART1->CR1 |= USART_CR1_RXNEIE; // Разрешить прерывание по приему байта (RXNE)
+        NVIC_EnableIRQ(USART1_IRQn);    // Разрешить прерывания от USART1 в контроллере NVIC
+
 	USART1 -> CR1 |= USART_CR1_UE;                                   // Включение USART1
 
 }

@@ -11,4 +11,6 @@
 #include "ffconf.h"
 #include "diskio.h"
 
+#include "sd.h"
+
 void RCC_Init(void);
