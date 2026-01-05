@@ -15,16 +15,16 @@ void RCC_Init(void);
 //  позиционирование на кнопке
 //  включение режима мигания курсора
 
-uint8_t line1_text[LCD_CHAR_NUM_MAX] = "BTN3 BTN2 BTN1  ";
+uint8_t line1_text[LCD_CHAR_NUM_MAX] = "  BTN3 BTN2 BTN1";
 uint8_t line2_text[8][LCD_CHAR_NUM_MAX] = {
-                              "0 0 0           ",
-                              "0 0 1           ",
-                              "0 1 0           ",
-                              "0 1 1           ",
-                              "1 0 0           ",
-                              "1 0 1           ",
-                              "1 1 0           ",
-                              "1 1 1           ",
+                              "  0    0    0   ",
+                              "  0    0    1   ",
+                              "  0    1    0   ",
+                              "  0    1    1   ",
+                              "  1    0    0   ",
+                              "  1    0    1   ",
+                              "  1    1    0   ",
+                              "  1    1    1   ",
                             };
 
 /*void on_btn_pressed(void) {
@@ -38,7 +38,7 @@ void on_btn_released(void) {
 }*/
 
 void on_btn_event(void) {
-  uint8_t value = (btn_state[0] << 2) | (btn_state[1] << 1) | btn_state[2];
+  uint8_t value = (btn_state[2] << 2) | (btn_state[1] << 1) | btn_state[0];
 
   LCD1602_SetDDRAMAddress(0x00);
   LCD1602_WriteString4bits(line1_text, LCD_CHAR_NUM_MAX);
@@ -95,15 +95,13 @@ int main(void) {
   LOG_MESSAGE("Init completed");
 
   while(1) {
-      GPIO_LED_all_off();
-      Delay_sec(1);
-      on_btn_event();
-      LOG_MESSAGE("Writen");
-      Delay_sec(1);
-      GPIO_LED_all_on();
-      Delay_sec(1);
-      //
-      //Buttons_check();
+      //GPIO_LED_all_off();
+      //on_btn_event();
+      //Delay_sec(1);
+      //GPIO_LED_all_on();
+      //Delay_sec(1);
+      
+      Buttons_check();
   }
 }
 
