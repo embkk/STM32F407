@@ -127,6 +127,7 @@ void LCD1602_WriteString4bits(uint8_t String[], uint8_t StringLen){
 
 // !!! bit 7 in NewAddress allways must be 1.
 void LCD1602_SetDDRAMAddress(uint8_t NewAddress){
+  for(uint32_t i = 0; i<1000000;i++) ;
   uint8_t DDR_Address = ( NewAddress | 0x80 );
   LCD1602_SendFullInstruction4bits( DDR_Address );
 }
