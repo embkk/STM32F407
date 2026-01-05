@@ -4,6 +4,7 @@
 #include "delay.h"
 #include "buttons.h"
 #include "lcd1602.h"
+#include "adc.h"
 
 void RCC_Init(void);
 
@@ -83,6 +84,7 @@ int main(void) {
   RCC_Init();
   Buttons_init();
   LED_init();
+  ADC1_Init();
 
   GPIO_LED_all_off();
   Event_AddListener(btn_pressed, on_btn_event);
@@ -100,7 +102,7 @@ int main(void) {
       //Delay_sec(1);
       //GPIO_LED_all_on();
       //Delay_sec(1);
-      
+      LOG_MESSAGE("%d", ADC1->DR);
       Buttons_check();
   }
 }
