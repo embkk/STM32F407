@@ -4,11 +4,11 @@
   uint16_t us_delay;
   uint16_t ms_delay;
   uint16_t sec_delay;
-
+  uint16_t us_counter;
+  uint16_t ms_counter;
+  uint16_t sec_counter;
 void timer_counter(void) {
-  static uint16_t us_counter;
-  static uint16_t ms_counter;
-  static uint16_t sec_counter;
+
   
   us_delay++;
   if(us_counter < 1000 ){

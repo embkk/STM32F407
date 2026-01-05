@@ -90,6 +90,7 @@
           <file file_name="lib/inc/lcd1602.h" />
           <file file_name="lib/inc/log.h" />
           <file file_name="lib/inc/modbus_rtu.h" />
+          <file file_name="lib/inc/onewire.h" />
           <file file_name="lib/inc/spi.h" />
           <file file_name="lib/inc/timer.h" />
           <file file_name="lib/inc/tools.h" />
@@ -109,6 +110,7 @@
           <file file_name="lib/src/lcd1602.c" />
           <file file_name="lib/src/log.c" />
           <file file_name="lib/src/modbus_rtu.c" />
+          <file file_name="lib/src/onewire.c" />
           <file file_name="lib/src/RCC_Init.c" />
           <file file_name="lib/src/spi.c" />
           <file file_name="lib/src/test.c" />
